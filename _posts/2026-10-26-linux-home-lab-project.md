@@ -36,62 +36,14 @@ This post covers **Task 01: Configure networking and set hostname**, walking thr
 
 ## Step-by-Step Walkthrough
 
-### Step 1: Virtual Machine Cluster Setup
-
-<img src="/assets/img/linux-homelab/01-vmware-dual-nodes.png" width="900" alt="VMware Fusion Dual RHEL Node Setup">
-<p style="font-size: 14px; text-align: center; color: #666;">
-  Figure 1: Dual RHEL 9 virtual machines (node1 and node2) running side-by-side in VMware Fusion.
-</p>
-
-Two independent RHEL 9 virtual machines (`node1` on the left, `node2` on the right) are running in VMware Fusion. Each node operates with its own virtual disk, network adapters, and dedicated resources.
-
----
-
-### Step 2: Console Verification
+### Step 1: Virtual Machine Cluster Setup & Console Verification
 
 <img src="/assets/img/linux-homelab/02-vmware-node-verification.png" width="900" alt="Console verification on node1 and node2">
 <p style="font-size: 14px; text-align: center; color: #666;">
-  Figure 2: Verifying root terminal access and shell responsiveness on both nodes.
+  Figure 1: Dual RHEL 9 virtual machines (node1 and node2) running side-by-side in VMware Fusion with active root terminal access.
 </p>
 
-Logged in as `root` on both machines and ran a quick echo command (`This is node1` and `This is node2`) to confirm terminal responsiveness and ensure commands are directed to the correct node.
-
----
-
-### Step 3: Simulator Source Tree
-
-<img src="/assets/img/linux-homelab/03-simulator-source-structure.png" width="900" alt="Simulator repository directory structure">
-<p style="font-size: 14px; text-align: center; color: #666;">
-  Figure 3: RHCSA practice simulator source tree containing tasks, exams, tests, and CLI tools.
-</p>
-
-Checked the local simulator directory structure, which organizes task definitions, exam profiles, and automated grading scripts into `tasks/`, `exams/`, `tests/`, and `bin/`.
-
----
-
-### Step 4: Accessing the Simulator Web Interface
-
-<img src="/assets/img/linux-homelab/04-rhcsa-simulator-web-ui.png" width="900" alt="RHCSA Exam Simulator Web Dashboard">
-<p style="font-size: 14px; text-align: center; color: #666;">
-  Figure 4: Simulator web interface at http://localhost:8200 displaying 25 practical tasks.
-</p>
-
-Opened the simulator web interface at `http://localhost:8200`. The exam consists of 25 practical tasks designed to replicate an RHCSA exam environment with an active countdown timer.
-
----
-
-### Step 5: Reviewing Task 01 Requirements
-
-<img src="/assets/img/linux-homelab/05-task01-network-requirements.png" width="900" alt="Task 01 networking and hostname requirements">
-<p style="font-size: 14px; text-align: center; color: #666;">
-  Figure 5: Task 01 prompt: Configure networking and set hostname.
-</p>
-
-Reviewed the instructions for Task 01:
-* Configure interface `rhcsa0` with static IP `172.25.250.11/24`.
-* Set Gateway to `172.25.250.254` and DNS to `172.25.250.254`.
-* Set the hostname to `node1.lab.network17.com`.
-* Ensure autoconnect is enabled.
+Two independent RHEL 9 virtual machines (`node1` on the left, `node2` on the right) are running in VMware Fusion. Each node operates with its own virtual disk, network adapters, and dedicated resources. Logged in as `root` on both machines and ran a quick echo command (`This is node1` and `This is node2`) to confirm terminal responsiveness and ensure commands are directed to the correct node.
 
 ---
 
