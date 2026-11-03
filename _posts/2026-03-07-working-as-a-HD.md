@@ -16,12 +16,12 @@ Responding Daily Incidents
 
 ## The Human FAQ: Daily Incidents
 I wasn't just a helpdesk; I was the primary contact for every technical hurdle in the building. The raw reality of my job involved fielding these exact questions every single day:
-* A switch or router died. Could you replace it?
-* It doesn't connect to the internet.
-* "My account won't log in. Could you reset my password?"
+* "A switch or router died. Could you replace it?"
+* "My computer doesn't connect to the internet."
+* "My account keep failing to log in. Could you reset my password?"
 * "My computer doesn't boot. It does turn on and it only makes beep sound"
 * "A printer says I need to update its firmware. Could you do this for me?"
-* "The projector won't display"
+* "The projector does not display the image"
 * "What is the right cable for this equipment? or Which one is DP, HDMI, DVI, or USB2?"
 
 ## The Software Installation Marathon
