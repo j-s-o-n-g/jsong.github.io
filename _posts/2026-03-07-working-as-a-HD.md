@@ -7,23 +7,22 @@ math: true
 ---
 
 ## The Helpdesk Life: Boots on the Ground
-I worked as a Helpdesk technician in the Republic of Korea Army. It was a physically and mentally demanding grind, but the technical field experience was worth every drop of sweat.
+I worked as a Helpdesk in Republik of Korea Army for 21 months. It was a physically and mentally demanding grind, but the technical field experience was worth every drop of sweat.
 
-<img src="/assets/img/SGT_jsong1.jpeg" width="700" alt="Responding Daily Incidents" style="display: block; margin: 0 auto;">
+<img src="/assets/img/SGT_jsong1.jpeg" width="650" alt="Responding Daily Incidents" style="display: block; margin: 0 auto;">
 <p style="font-size: 14px; text-align: center; color: #666;">
-Responding to daily technical incidents and field inquiries
+Responding Daily Incidents
 </p>
 
 ## The Human FAQ: Daily Incidents
-I wasn't just handling basic helpdesk queries; I was the primary contact for resolving technical roadblocks across the facility. The raw reality of the role involved answering these recurring questions day in and day out:
-* "My computer won't turn on."
-* "My device says I need to update its firmware. What is firmware?"
-* "My keyboard or mouse doesn't work."
-* "The projector won't display presentation material."
-* "What is the right cable for this equipment? Which one is DP, HDMI, DVI, or USB?"
-* "I am new personnel—could you provision my account?"
+I wasn't just a helpdesk; I was the primary contact for every technical hurdle in the building. The raw reality of my job involved fielding these exact questions every single day:
+* A switch or router died. Could you replace it?
+* It doesn't connect to the internet.
 * "My account won't log in. Could you reset my password?"
-* ...and the inevitable classic: "How do I lock or unlock the classroom? Where is the key?"
+* "My computer doesn't boot. It does turn on and it only makes beep sound"
+* "A printer says I need to update its firmware. Could you do this for me?"
+* "The projector won't display"
+* "What is the right cable for this equipment? or Which one is DP, HDMI, DVI, or USB2?"
 
 ## The Software Installation Marathon
 Our lab housed over 100 Mac workstations. Because they all ran Windows virtualized via Parallels alongside macOS, I was effectively managing 200 operating system instances. My colleague and I handled everything from upgrading aging OS versions to deploying heavy software suites like Adobe Creative Cloud and corporate antivirus packages. Back in the mechanical HDD era, bulk installations took enormous amounts of time. We had to coordinate lunch breaks in shifts, heading out while waiting for slow progress bars to creep toward 100%.
