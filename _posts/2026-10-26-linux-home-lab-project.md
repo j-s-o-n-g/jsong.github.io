@@ -8,8 +8,6 @@ comments: true
 
 I set up this dual-node virtualization lab to practice hands-on Red Hat Enterprise Linux (RHEL 9) system administration in a realistic environment. To simulate real-world scenarios and RHCSA exam practice, I integrated a local simulation harness containing 25 practical tasks.
 
-This post covers **Task 01: Configure networking and set hostname**, walking through each step from initial environment checks to configuring network parameters via NetworkManager and verifying persistence after reboot.
-
 ---
 
 ## Lab Environment
@@ -23,7 +21,10 @@ This post covers **Task 01: Configure networking and set hostname**, walking thr
 
 ---
 
-## Task 01 Requirements
+<details markdown="1">
+<summary><strong>Task 1: Configure networking and set hostname</strong></summary>
+
+## Task 1 Requirements
 
 * **Static IPv4 Address**: `172.25.250.11/24`
 * **Gateway**: `172.25.250.254`
@@ -223,3 +224,5 @@ reboot
 </p>
 
 If the network configuration remains intact after rebooting, then it's a success!
+
+</details>
