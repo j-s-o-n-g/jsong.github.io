@@ -24,14 +24,23 @@ I set up this dual-node virtualization lab to practice hands-on Red Hat Enterpri
 <details markdown="1">
 <summary><strong>Task 1: Configure networking and set hostname</strong></summary>
 
-## Task 1 Requirements
+```text
+configure networking and set hostname
 
-* **Static IPv4 Address**: `172.25.250.11/24`
-* **Gateway**: `172.25.250.254`
-* **DNS Server**: `172.25.250.254`
-* **Hostname**: `node1.lab.network17.com`
-* **Autoconnect**: Enabled so the connection starts automatically on boot.
-* **Target Interface**: Configure the profile bound to `rhcsa0`. Avoid reconfiguring the active management interface (`enp2s0`) to prevent losing access to the machine.
+Configure the spare network interface rhcsa0 on this system with the
+following static IPv4 settings, make it start automatically at boot, and
+set the system hostname:
+
+  IPv4 address : 172.25.250.11/24
+  Gateway      : 172.25.250.254
+  DNS server   : 172.25.250.254
+  Hostname     : node1.lab.network17.com
+
+A connection profile named rhcsa0, already bound to the rhcsa0 interface, is
+present on this system -- configure that profile and keep it bound to rhcsa0.
+rhcsa0 is a dedicated, isolated test interface; do NOT reconfigure the NIC you
+are connected through (e.g. enp1s0), or you will lose access to this system.
+```
 
 ---
 
@@ -232,21 +241,14 @@ If the network configuration remains intact after rebooting, then it's a success
 <details markdown="1">
 <summary><strong>Task 2: Configure package repositories</strong></summary>
 
-## Task 2 Requirements
+```text
+Configure the package repositories in /etc/yum.repos.d/app.repo. Define two
+repositories — BaseOS and AppStream — both enabled with GPG check disabled,
+pointing at the provided package source:
 
-* **Target System**: `node1.example.com`
-* **Configuration File**: `/etc/yum.repos.d/app.repo`
-* **Repositories**:
-  * **BaseOS**:
-    * Name: `BaseOS`
-    * Base URL: `file:///opt/rhcsa-repo/BaseOS`
-    * Enabled: `1`
-    * GPG Check: `0`
-  * **AppStream**:
-    * Name: `BaseOS`
-    * Base URL: `file:///opt/rhcsa-repo/AppStream`
-    * Enabled: `1`
-    * GPG Check: `0`
+  BaseOS    -> file:///opt/rhcsa-repo/BaseOS
+  AppStream -> file:///opt/rhcsa-repo/AppStream
+```
 
 ---
 
