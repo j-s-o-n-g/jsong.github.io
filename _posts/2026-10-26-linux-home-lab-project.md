@@ -226,3 +226,94 @@ reboot
 If the network configuration remains intact after rebooting, then it's a success!
 
 </details>
+
+---
+
+<details markdown="1">
+<summary><strong>Task 2: Configure package repositories</strong></summary>
+
+## Task 2 Requirements
+
+* **Target System**: `node1.example.com`
+* **Configuration File**: `/etc/yum.repos.d/app.repo`
+* **Repositories**:
+  * **BaseOS**:
+    * Name: `BaseOS`
+    * Base URL: `file:///opt/rhcsa-repo/BaseOS`
+    * Enabled: `1`
+    * GPG Check: `0`
+  * **AppStream**:
+    * Name: `BaseOS`
+    * Base URL: `file:///opt/rhcsa-repo/AppStream`
+    * Enabled: `1`
+    * GPG Check: `0`
+
+---
+
+## Step-by-Step Walkthrough
+
+### Step 1: Checking System Credentials & Switching to Root
+
+<img src="/assets/img/linux-homelab/20-task02-config-info.png" width="900" alt="Checking configuration info and elevating to root">
+<p style="font-size: 14px; text-align: center; color: #666;">
+  Figure 20: Checking root password in the exam configuration portal and switching to root on node1.
+</p>
+
+Checked the exam configuration information page (`http://localhost:8200/config`), which lists the host IP addresses and root password (`trootent`) for `node1.example.com`. Switched to `root` using `su - root`.
+
+---
+
+### Step 2: Reviewing Task 02 Prompt & Opening Repository File
+
+<img src="/assets/img/linux-homelab/21-task02-prompt-and-vi.png" width="900" alt="Reviewing Task 02 prompt and opening app.repo">
+<p style="font-size: 14px; text-align: center; color: #666;">
+  Figure 21: Reviewing Task 02 requirements and opening /etc/yum.repos.d/app.repo with vi.
+</p>
+
+Reviewed the task requirements for Task 02: configure package repositories in `/etc/yum.repos.d/app.repo` with `BaseOS` and `AppStream` pointing to `file:///opt/rhcsa-repo/BaseOS` and `file:///opt/rhcsa-repo/AppStream`. Opened the file with `vi`:
+```bash
+vi /etc/yum.repos.d/app.repo
+```
+
+---
+
+### Step 3: Defining Repository Stanzas in `app.repo`
+
+<img src="/assets/img/linux-homelab/22-task02-editing-app-repo.png" width="900" alt="Configuring BaseOS and AppStream repositories in vi">
+<p style="font-size: 14px; text-align: center; color: #666;">
+  Figure 22: Writing the repository definitions in /etc/yum.repos.d/app.repo and saving with :wq.
+</p>
+
+Defined both repository stanzas in `/etc/yum.repos.d/app.repo`:
+```ini
+[BaseOS]
+name=BaseOS
+baseurl=file:///opt/rhcsa-repo/BaseOS
+enabled=1
+gpgcheck=0
+
+[AppStream]
+name=BaseOS
+baseurl=file:///opt/rhcsa-repo/AppStream
+enabled=1
+gpgcheck=0
+```
+Saved and exited the editor with `:wq`.
+
+---
+
+### Step 4: Cleaning Cache & Verifying Repositories
+
+<img src="/assets/img/linux-homelab/23-task02-yum-clean-repolist.png" width="900" alt="Running yum clean all and yum repolist -v">
+<p style="font-size: 14px; text-align: center; color: #666;">
+  Figure 23: Cleaning YUM cache and verifying configured repositories with yum repolist -v.
+</p>
+
+Ran `yum clean all` to remove cached metadata, followed by `yum repolist -v` to verify that the local BaseOS and AppStream repositories loaded properly:
+```bash
+yum clean all
+yum repolist -v
+```
+Confirmed that the repository metadata was loaded from `/opt/rhcsa-repo/`, and marked Task 02 as `Done` in the exam simulator.
+
+</details>
