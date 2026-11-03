@@ -60,3 +60,4 @@ Mobile communications and broadcasting truck infrastructure
 Serving in an IT Helpdesk and technical field support role was demanding, yet it proved to be an invaluable foundation. I developed deep confidence in operating across diverse OS platforms, handling sudden hardware failures under pressure, and methodically troubleshooting network and peripheral issues.
 
 From resolving user issues over the helpdesk line to hauling heavy aluminum workstation towers and managing field communications gear, that experience gave me a durable, hands-on respect for the physical and operational realities of IT infrastructure.
+
