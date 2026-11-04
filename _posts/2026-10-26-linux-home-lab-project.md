@@ -450,3 +450,139 @@ systemctl status httpd
 ```
 
 </details>
+
+<details markdown="1">
+<summary><strong>Task 4: Manage Users and Groups</strong></summary>
+
+```text
+Manage users and groups
+
+문제 요구사항:
+- Create the group named "sysadms"
+- Create users natasha and harry; they should be members of the supplementary group sysadms.
+- Create a user sarah who should have a non-interactive shell and should not be a member of sysadms.
+- Set passwords for all users as "trootent"
+- sysadms 그룹에 속한 모든 사용자가 비밀번호 입력 없이 sudo를 통해 모든 사용자(root 포함)의 권한으로 모든 명령어를 실행할 수 있도록 설정하시오.
+- harry 사용자가 비밀번호 입력 없이 sudo를 통해 모든 사용자(root 포함)의 권한으로 passwd 명령어를 실행할 수 있도록 설정하시오.
+- sysadms 그룹에 속한 모든 사용자가 sudo를 이용하여 모든 사용자(root 포함)의 권한으로 useradd 명령어를 실행할 수 있도록 설정하시오.
+```
+
+---
+
+## Step-by-Step Walkthrough
+
+### Step 1: Creating the sysadms Group
+
+<img src="/assets/img/linux-homelab/32-task04-groupadd-sysadms.png" width="900" alt="Creating group sysadms">
+<p style="font-size: 14px; text-align: center; color: #666;">
+  Figure 32: Creating the administrative group sysadms using groupadd.
+</p>
+
+Created the requested administrative group `sysadms`:
+```bash
+groupadd sysadms
+```
+
+---
+
+### Step 2: Creating Users natasha and harry with Supplementary Group
+
+<img src="/assets/img/linux-homelab/33-task04-useradd-natasha-harry.png" width="900" alt="Creating users natasha and harry">
+<p style="font-size: 14px; text-align: center; color: #666;">
+  Figure 33: Creating users natasha and harry with supplementary group sysadms.
+</p>
+
+Created `natasha` and `harry`, assigning `sysadms` as their supplementary group:
+```bash
+useradd -G sysadms natasha
+useradd -G sysadms harry
+```
+
+---
+
+### Step 3: Configuring User sarah with Non-Interactive Shell
+
+<img src="/assets/img/linux-homelab/34-task04-usermod-sarah-nologin.png" width="900" alt="Setting non-interactive shell for sarah">
+<p style="font-size: 14px; text-align: center; color: #666;">
+  Figure 34: Setting non-interactive shell (/sbin/nologin) for user sarah.
+</p>
+
+Created or updated user `sarah` to have a non-interactive login shell (`/sbin/nologin`) and no membership in `sysadms`:
+```bash
+useradd -s /sbin/nologin sarah
+usermod -s /sbin/nologin sarah
+```
+
+> User passwords for `natasha`, `harry`, and `sarah` are set to `trootent` as required:
+> ```bash
+> echo "trootent" | passwd --stdin natasha
+> echo "trootent" | passwd --stdin harry
+> echo "trootent" | passwd --stdin sarah
+> ```
+
+---
+
+### Step 4: Accessing Sudoers Configuration with visudo
+
+<img src="/assets/img/linux-homelab/35-task04-visudo-command.png" width="900" alt="Opening visudo">
+<p style="font-size: 14px; text-align: center; color: #666;">
+  Figure 35: Opening sudoers configuration file safely using visudo.
+</p>
+
+Used `visudo` to safely edit the sudoers configuration with syntax validation:
+```bash
+visudo
+```
+
+---
+
+### Step 5: Verifying Absolute Command Paths
+
+<img src="/assets/img/linux-homelab/36-task04-which-passwd-useradd.png" width="900" alt="Finding binary paths with which">
+<p style="font-size: 14px; text-align: center; color: #666;">
+  Figure 36: Resolving absolute paths for passwd and useradd commands.
+</p>
+
+Checked the exact binary paths for commands specified in sudo rules:
+```bash
+which passwd
+which useradd
+```
+Output confirmed paths:
+- `/usr/bin/passwd`
+- `/usr/sbin/useradd`
+
+---
+
+### Step 6: Configuring Sudo Rules in sudoers
+
+<img src="/assets/img/linux-homelab/37-task04-editing-sudoers.png" width="900" alt="Adding sudo rules in visudo">
+<p style="font-size: 14px; text-align: center; color: #666;">
+  Figure 37: Adding sudoers permission rules for sysadms group and harry.
+</p>
+
+Appended the required sudo permission rules at the end of the sudoers configuration:
+```text
+%sysadms ALL=(ALL) NOPASSWD: ALL
+
+harry ALL=(ALL) NOPASSWD: /usr/bin/passwd
+
+%sysadms ALL=(ALL) /usr/sbin/useradd
+```
+Saved the configuration and exited using `:wq`.
+
+---
+
+### Step 7: Verifying Configuration Completion
+
+<img src="/assets/img/linux-homelab/38-task04-visudo-completed.png" width="900" alt="Completing visudo edit">
+<p style="font-size: 14px; text-align: center; color: #666;">
+  Figure 38: Completing sudoers rule modification and returning to the shell prompt.
+</p>
+
+`visudo` validated the syntax on save with no parse errors, returning cleanly to the root shell prompt:
+```bash
+visudo
+```
+
+</details>
