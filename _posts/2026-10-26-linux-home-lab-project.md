@@ -586,3 +586,109 @@ visudo
 ```
 
 </details>
+
+<details markdown="1">
+<summary><strong>Task 5: Crontab Configuration and Access Control</strong></summary>
+
+```text
+Crontab 유형1
+
+문제 요구사항:
+- 주기: 매일 14시 32분에 파일 실행.
+  실행 유저: natasha 계정으로
+  실행 파일: /bin/echo hiya
+- Configure the system so that only the user tom is allowed to create cron jobs.
+```
+
+---
+
+## Step-by-Step Walkthrough
+
+### Step 1: Checking Crond Service Status
+
+<img src="/assets/img/linux-homelab/39-task05-crond-initial-status.png" width="900" alt="Checking crond service status">
+<p style="font-size: 14px; text-align: center; color: #666;">
+  Figure 39: Verifying initial crond service status and configuration requirements.
+</p>
+
+Checked whether the cron daemon `crond` is active and running:
+```bash
+systemctl status crond
+```
+The service was active (running) and enabled on boot.
+
+---
+
+### Step 2: Accessing User Crontab for natasha
+
+<img src="/assets/img/linux-homelab/40-task05-crontab-natasha-edit.png" width="900" alt="Opening crontab for user natasha">
+<p style="font-size: 14px; text-align: center; color: #666;">
+  Figure 40: Opening crontab editor for user natasha using crontab -u natasha -e.
+</p>
+
+Opened `natasha`'s crontab using root privileges:
+```bash
+crontab -u natasha -e
+```
+
+---
+
+### Step 3: Setting the Scheduled Task for natasha
+
+<img src="/assets/img/linux-homelab/41-task05-editing-cron-job.png" width="900" alt="Configuring cron schedule and command">
+<p style="font-size: 14px; text-align: center; color: #666;">
+  Figure 41: Configuring daily schedule at 14:32 to run /bin/echo hiya.
+</p>
+
+Configured the required schedule (`minute: 32`, `hour: 14`, daily) and command:
+```text
+32 14 * * * /bin/echo hiya
+```
+Saved the file and exited `:wq`.
+
+---
+
+### Step 4: Configuring Cron Access Control
+
+<img src="/assets/img/linux-homelab/42-task05-vi-cron-allow.png" width="900" alt="Opening /etc/cron.allow">
+<p style="font-size: 14px; text-align: center; color: #666;">
+  Figure 42: Confirming crontab installation and opening /etc/cron.allow.
+</p>
+
+After saving `natasha`'s cron job (`crontab: installing new crontab`), opened `/etc/cron.allow` to restrict cron access:
+```bash
+vi /etc/cron.allow
+```
+
+---
+
+### Step 5: Restricting Cron Access to User tom
+
+<img src="/assets/img/linux-homelab/43-task05-editing-cron-allow.png" width="900" alt="Adding user tom to /etc/cron.allow">
+<p style="font-size: 14px; text-align: center; color: #666;">
+  Figure 43: Adding user tom to /etc/cron.allow to restrict crontab creation.
+</p>
+
+Added `tom` to `/etc/cron.allow`:
+```text
+tom
+```
+When `/etc/cron.allow` exists, only users listed within this file are permitted to create cron jobs, satisfying the requirement that only `tom` is allowed to create cron jobs. Saved and exited with `:wq`.
+
+---
+
+### Step 6: Enabling and Verifying Crond Service
+
+<img src="/assets/img/linux-homelab/44-task05-crond-service-verification.png" width="900" alt="Enabling and verifying crond service">
+<p style="font-size: 14px; text-align: center; color: #666;">
+  Figure 44: Enabling and verifying crond service status.
+</p>
+
+Ensured the daemon is enabled and running:
+```bash
+systemctl enable --now crond
+systemctl status crond
+```
+Confirmed that `crond.service` is active (running) and loaded properly.
+
+</details>
