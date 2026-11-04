@@ -1,5 +1,5 @@
 ---
-title: "Linux Fundamentals Note"
+title: "Linux Fundamentals Note with VirtualBox"
 date: 2026-06-26
 categories: [Linux]
 tags: [linux, ubuntu, virtualbox]     # TAG names should always be lowercase
