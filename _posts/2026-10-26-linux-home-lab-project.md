@@ -457,14 +457,14 @@ systemctl status httpd
 ```text
 Manage users and groups
 
-문제 요구사항:
-- Create the group named "sysadms"
+Requirements:
+- Create the group named "sysadms".
 - Create users natasha and harry; they should be members of the supplementary group sysadms.
 - Create a user sarah who should have a non-interactive shell and should not be a member of sysadms.
-- Set passwords for all users as "trootent"
-- sysadms 그룹에 속한 모든 사용자가 비밀번호 입력 없이 sudo를 통해 모든 사용자(root 포함)의 권한으로 모든 명령어를 실행할 수 있도록 설정하시오.
-- harry 사용자가 비밀번호 입력 없이 sudo를 통해 모든 사용자(root 포함)의 권한으로 passwd 명령어를 실행할 수 있도록 설정하시오.
-- sysadms 그룹에 속한 모든 사용자가 sudo를 이용하여 모든 사용자(root 포함)의 권한으로 useradd 명령어를 실행할 수 있도록 설정하시오.
+- Set passwords for all users as "trootent".
+- Configure sudo so that all members of the sysadms group can execute all commands with the privileges of any user (including root) without entering a password.
+- Configure sudo so that the user harry can execute the passwd command with the privileges of any user (including root) without entering a password.
+- Configure sudo so that all members of the sysadms group can execute the useradd command with the privileges of any user (including root).
 ```
 
 ---
@@ -591,12 +591,12 @@ visudo
 <summary><strong>Task 5: Crontab Configuration and Access Control</strong></summary>
 
 ```text
-Crontab 유형1
+Crontab Type 1
 
-문제 요구사항:
-- 주기: 매일 14시 32분에 파일 실행.
-  실행 유저: natasha 계정으로
-  실행 파일: /bin/echo hiya
+Requirements:
+- Schedule a job to run every day at 14:32:
+  - User: natasha
+  - Command: /bin/echo hiya
 - Configure the system so that only the user tom is allowed to create cron jobs.
 ```
 
