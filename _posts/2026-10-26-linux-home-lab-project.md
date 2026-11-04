@@ -1,8 +1,8 @@
 ---
-title: "Linux Home Lab Project"
+title: "Linux Home Lab Project with VMWare"
 date: 2026-10-26
 categories: [Linux]
-tags: [linux, homelab]     # TAG names should always be lowercase
+tags: [linux, homelab, vmware]     # TAG names should always be lowercase
 comments: true
 ---
 
