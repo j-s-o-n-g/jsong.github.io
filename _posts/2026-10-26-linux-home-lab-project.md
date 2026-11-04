@@ -319,3 +319,134 @@ yum repolist -v
 Confirmed that the repository metadata was loaded from `/opt/rhcsa-repo/`, and marked Task 02 as `Done` in the exam simulator.
 
 </details>
+
+---
+
+<details markdown="1">
+<summary><strong>Task 3: Configuring and Securing an Apache HTTP Service</strong></summary>
+
+```text
+On Node1, configure the Apache HTTP Server to meet the following requirements:
+
+* The Apache web service must be installed, enabled, and running.
+* The web server must listen on TCP port 85.
+* The service must be accessible from both the local system and external hosts.
+* When curled or accessed via a web browser, the server must display the following message:
+  Welcome to the Apache Web Server!
+```
+
+---
+
+## Step-by-Step Walkthrough
+
+### Step 1: Checking Initial HTTP Service Status
+
+<img src="/assets/img/linux-homelab/24-task03-httpd-failed-status.png" width="900" alt="Checking httpd status">
+<p style="font-size: 14px; text-align: center; color: #666;">
+  Figure 24: Inspecting httpd service status with systemctl status httpd showing failed status.
+</p>
+
+Checked current `httpd` status. The service was in `failed` state due to `Permission denied` when trying to bind to a non-standard port under SELinux:
+```bash
+systemctl status httpd
+```
+
+---
+
+### Step 2: Verifying Package Installation
+
+<img src="/assets/img/linux-homelab/25-task03-dnf-install-httpd.png" width="900" alt="Installing httpd with dnf">
+<p style="font-size: 14px; text-align: center; color: #666;">
+  Figure 25: Checking httpd package installation with dnf install -y httpd.
+</p>
+
+Ran `dnf install -y httpd` to ensure the Apache package is installed:
+```bash
+dnf install -y httpd
+```
+Confirmed that `httpd-2.4.63-13.el10.aarch64` is already installed.
+
+---
+
+### Step 3: Opening Apache Configuration
+
+<img src="/assets/img/linux-homelab/26-task03-vi-httpd-conf.png" width="900" alt="Opening httpd.conf with vi">
+<p style="font-size: 14px; text-align: center; color: #666;">
+  Figure 26: Opening /etc/httpd/conf/httpd.conf with vi.
+</p>
+
+Opened the primary Apache configuration file:
+```bash
+vi /etc/httpd/conf/httpd.conf
+```
+
+---
+
+### Step 4: Configuring Listen Port 85
+
+<img src="/assets/img/linux-homelab/27-task03-editing-listen-85.png" width="900" alt="Adding Listen 85 in httpd.conf">
+<p style="font-size: 14px; text-align: center; color: #666;">
+  Figure 27: Adding Listen 85 directive in httpd.conf and saving with :wq.
+</p>
+
+Added the `Listen 85` directive in `/etc/httpd/conf/httpd.conf` and saved the file with `:wq`.
+
+---
+
+### Step 5: Allowing Port 85 in SELinux Policy
+
+<img src="/assets/img/linux-homelab/28-task03-semanage-port-85.png" width="900" alt="Configuring SELinux port policy">
+<p style="font-size: 14px; text-align: center; color: #666;">
+  Figure 28: Adding TCP port 85 to http_port_t SELinux type with semanage port.
+</p>
+
+Configured SELinux to permit Apache to bind to non-standard TCP port 85:
+```bash
+semanage port -a -t http_port_t -p tcp 85
+```
+
+---
+
+### Step 6: Enabling and Starting Apache Service
+
+<img src="/assets/img/linux-homelab/29-task03-systemctl-enable-start.png" width="900" alt="Enabling and starting httpd service">
+<p style="font-size: 14px; text-align: center; color: #666;">
+  Figure 29: Enabling and restarting httpd service.
+</p>
+
+Enabled the service to start automatically at boot and restarted `httpd`:
+```bash
+systemctl enable --now httpd
+systemctl restart httpd
+```
+
+---
+
+### Step 7: Configuring Firewall for Port 85
+
+<img src="/assets/img/linux-homelab/30-task03-firewall-add-port.png" width="900" alt="Configuring firewalld for port 85">
+<p style="font-size: 14px; text-align: center; color: #666;">
+  Figure 30: Allowing TCP port 85 in firewalld and reloading rules.
+</p>
+
+Opened TCP port 85 permanently in `firewalld` to allow external network access:
+```bash
+firewall-cmd --permanent --add-port=85/tcp
+firewall-cmd --reload
+```
+
+---
+
+### Step 8: Verifying Active Service Status
+
+<img src="/assets/img/linux-homelab/31-task03-httpd-active-running.png" width="900" alt="Verifying httpd active running status">
+<p style="font-size: 14px; text-align: center; color: #666;">
+  Figure 31: Verifying active (running) status of httpd.
+</p>
+
+Ran `systemctl status httpd` to verify that the service is `active (running)` and enabled at boot:
+```bash
+systemctl status httpd
+```
+
+</details>
