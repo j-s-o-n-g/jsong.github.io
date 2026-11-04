@@ -1,5 +1,5 @@
 ---
-title: "Working as an IT Help Desk Technician"
+title: "Working as an IT Helpdesk Technician"
 date: 2026-03-07
 categories: [Helpdesk]
 tags: [helpdesk]     # TAG names should always be lowercase
