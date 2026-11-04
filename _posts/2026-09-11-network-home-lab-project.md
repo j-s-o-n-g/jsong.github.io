@@ -1,5 +1,5 @@
 ---
-title: "Network Home Lab Project"
+title: "Network Home Lab Project with Packet Tracer"
 date: 2026-09-11
 categories: [Network]
 tags: [network, homelab, packet tracer, cisco]     # TAG names should always be lowercase
