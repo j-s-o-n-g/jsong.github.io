@@ -853,3 +853,102 @@ timedatectl
 The output confirmed `System clock synchronized: yes` and `NTP service: active`.
 
 </details>
+
+<details markdown="1">
+<summary><strong>Task 8: Configure AutoFS for On-Demand Network Mounts</strong></summary>
+
+```text
+Configure AutoFS
+
+Requirements:
+- Configure AutoFS to automatically mount the remote NFS share /rhome/remoteuser5 from node5.domain250.example.com to the local mount point /rhome/remoteuser5 on demand.
+- The configuration must persist across system reboots.
+```
+
+---
+
+## Step-by-Step Walkthrough
+
+### Step 1: Installing AutoFS and NFS Utilities
+
+<img src="/assets/img/linux-homelab/53-task08-install-autofs-nfs-utils.png" width="900" alt="Installing autofs and nfs-utils packages">
+<p style="font-size: 14px; text-align: center; color: #666;">
+  Figure 53: Checking and installing autofs and nfs-utils packages using dnf.
+</p>
+
+Installed the automounter daemon `autofs` and client NFS utilities `nfs-utils`:
+```bash
+dnf install -y autofs nfs-utils
+```
+Both packages were verified as installed and up-to-date on the system.
+
+---
+
+### Step 2: Configuring the Master Map File (/etc/auto.master)
+
+<img src="/assets/img/linux-homelab/54-task08-edit-auto-master.png" width="900" alt="Configuring /etc/auto.master">
+<p style="font-size: 14px; text-align: center; color: #666;">
+  Figure 54: Configuring the master map in /etc/auto.master to define the base mount directory and secondary map.
+</p>
+
+Edited `/etc/auto.master` to register the base mount directory `/rhome` and specify its mapping configuration file `/etc/auto.rhome`:
+```bash
+vi /etc/auto.master
+```
+Appended the following entry to the master map:
+```text
+/rhome /etc/auto.rhome
+```
+Saved the configuration and exited using `:wq`.
+
+---
+
+### Step 3: Opening the Secondary Map File (/etc/auto.rhome)
+
+<img src="/assets/img/linux-homelab/55-task08-open-auto-rhome.png" width="900" alt="Opening /etc/auto.rhome with vi">
+<p style="font-size: 14px; text-align: center; color: #666;">
+  Figure 55: Creating and opening the AutoFS secondary map file /etc/auto.rhome with vi.
+</p>
+
+Opened `/etc/auto.rhome` with `vi` to configure the individual mount map definition:
+```bash
+vi /etc/auto.rhome
+```
+
+---
+
+### Step 4: Configuring the Remote NFS Mount Map
+
+<img src="/assets/img/linux-homelab/56-task08-edit-auto-rhome.png" width="900" alt="Editing /etc/auto.rhome mount configuration">
+<p style="font-size: 14px; text-align: center; color: #666;">
+  Figure 56: Specifying the mount key, mount options, and remote NFS export path in /etc/auto.rhome.
+</p>
+
+Defined the target mount key, filesystem options, and source NFS share in `/etc/auto.rhome`:
+```text
+remoteuser5 -rw,sync node5.domain250.example.com:/rhome/remoteuser5
+```
+
+- **Key (`remoteuser5`)**: The subdirectory name created dynamically under `/rhome` upon access (`/rhome/remoteuser5`).
+- **Options (`-rw,sync`)**: Mount options specifying read-write access and synchronous data writing.
+- **Location (`node5.domain250.example.com:/rhome/remoteuser5`)**: The remote NFS server hostname and exported directory path.
+
+Saved and exited using `:wq`.
+
+---
+
+### Step 5: Enabling and Restarting the AutoFS Service
+
+<img src="/assets/img/linux-homelab/57-task08-enable-restart-autofs.png" width="900" alt="Enabling and restarting autofs service">
+<p style="font-size: 14px; text-align: center; color: #666;">
+  Figure 57: Enabling the autofs service to start at boot and restarting the daemon.
+</p>
+
+Enabled `autofs` to start automatically on system boot and restarted the service to apply the new maps immediately:
+```bash
+systemctl enable --now autofs
+systemctl restart autofs
+```
+With AutoFS active, any command attempting to access `/rhome/remoteuser5` dynamically triggers the NFS mount from `node5.domain250.example.com`, unmounting automatically after an idle period.
+
+</details>
