@@ -1013,3 +1013,137 @@ ls -l /root/files
 The output confirmed that user `natasha`'s mail spool, directory structure, and configuration files were successfully copied into `/root/files`.
 
 </details>
+
+<details markdown="1">
+<summary><strong>Task 10: Search and Extract Strings Matching a Specific Pattern</strong></summary>
+
+```text
+Find Matching Strings
+
+Requirements:
+- Find all lines containing the string "ich" in the /usr/share/dict/words file.
+- Save all matching strings into the /root/lines file without altering the original order.
+```
+
+---
+
+## Step-by-Step Walkthrough
+
+### Step 1: Extracting Matching Strings Using grep
+
+<img src="/assets/img/linux-homelab/60-task10-grep-ich-save-lines.png" width="900" alt="Extracting lines with grep into /root/lines">
+<p style="font-size: 14px; text-align: center; color: #666;">
+  Figure 60: Executing grep to search for "ich" in /usr/share/dict/words and redirecting output to /root/lines.
+</p>
+
+Executed `grep` against the dictionary file to isolate every entry containing the substring `ich` and redirected standard output directly into `/root/lines`:
+```bash
+grep ich /usr/share/dict/words > /root/lines
+```
+
+- `grep`: Global regular expression print tool used to scan files for lines matching a designated pattern.
+- `ich`: The target string pattern to search for across lines.
+- `/usr/share/dict/words`: The source word list file provided in Red Hat Enterprise Linux.
+- `> /root/lines`: Standard redirection operator that creates the target file `/root/lines` (or overwrites it if it exists) with matching lines in their original order.
+
+---
+
+### Step 2: Inspecting Extracted Content
+
+<img src="/assets/img/linux-homelab/61-task10-cat-root-lines.png" width="900" alt="Inspecting extracted content with cat">
+<p style="font-size: 14px; text-align: center; color: #666;">
+  Figure 61: Inspecting the extracted lines in /root/lines using cat.
+</p>
+
+Viewed the output file to confirm proper pattern matching:
+```bash
+cat /root/lines
+```
+
+The output confirmed that each line contains the substring `ich` (e.g., `Whichways`, `wich`, `Wichern`, `wicht`, `Zurich`, `zurich`) while preserving line formatting and casing.
+
+---
+
+### Step 3: Verifying Line Count with wc
+
+<img src="/assets/img/linux-homelab/62-task10-wc-verify-line-count.png" width="900" alt="Verifying line count with wc -l">
+<p style="font-size: 14px; text-align: center; color: #666;">
+  Figure 62: Verifying the total line count of matching strings with wc -l.
+</p>
+
+Verified the exact number of extracted lines:
+```bash
+wc -l /root/lines
+```
+
+- `wc -l`: Counts total newline characters in the specified file.
+- The command confirmed `1717 /root/lines` entries, validating that all matching instances from the source dictionary were written out without truncation.
+
+</details>
+
+<details markdown="1">
+<summary><strong>Task 11: Create and Compress Archive Files with tar</strong></summary>
+
+```text
+Archive and Compression
+
+Requirements:
+- Create a tar archive containing the contents of /usr/local.
+- Compress the archive using bzip2 compression and store it at /root/backup.tar.bz2.
+- (Alternative exam variant: Compress using gzip compression and store at /root/backup.tar.gz).
+```
+
+---
+
+## Step-by-Step Walkthrough
+
+### Step 1: Creating a bzip2-Compressed tar Archive
+
+<img src="/assets/img/linux-homelab/63-task11-tar-create-bzip2-archive.png" width="900" alt="Creating bzip2 archive with tar -cvjf">
+<p style="font-size: 14px; text-align: center; color: #666;">
+  Figure 63: Creating a bzip2-compressed tar archive of /usr/local stored at /root/backup.tar.bz2.
+</p>
+
+Created a compressed tar archive of the `/usr/local` directory using bzip2 compression:
+```bash
+tar -cvjf /root/backup.tar.bz2 /usr/local
+```
+
+- `tar`: The standard archiving utility on Unix and Linux systems.
+- `-c`: Creates a new archive file.
+- `-v`: Enables verbose mode to display files and directories as they are processed into the archive.
+- `-j`: Filters the archive through the `bzip2` compression algorithm (creating a `.tar.bz2` or `.tbz2` file).
+- `-f /root/backup.tar.bz2`: Specifies the archive filename and absolute destination path.
+- `/usr/local`: The source directory whose hierarchy and contents are recursively added to the archive.
+
+---
+
+### Step 2: Alternative Compression Formats and Verification Options
+
+In RHCSA exam scenarios, compression requirements may alternate between `bzip2` and `gzip`:
+
+#### Gzip Compression Variant
+If the task requires gzip compression (`.tar.gz` or `.tgz`), use the `-z` option:
+```bash
+tar -cvzf /root/backup.tar.gz /usr/local
+```
+
+#### Archive Verification
+To inspect the contents and verify the integrity of the created archive without extracting it to disk:
+```bash
+tar -tvf /root/backup.tar.bz2
+```
+- `-t`: Lists table of contents from the archive.
+
+To check the file metadata, size, and destination path:
+```bash
+ls -lh /root/backup.tar.bz2
+```
+
+> [!TIP]
+> Compression Option Quick Reference:
+> - `gzip` (`.tar.gz` / `.tgz`): `-z`
+> - `bzip2` (`.tar.bz2` / `.tbz2`): `-j`
+> - `xz` (`.tar.xz` / `.txz`): `-J`
+
+</details>
