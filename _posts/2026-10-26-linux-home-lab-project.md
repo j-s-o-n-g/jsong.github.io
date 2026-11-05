@@ -236,8 +236,6 @@ If the network configuration remains intact after rebooting, then it's a success
 
 </details>
 
----
-
 <details markdown="1">
 <summary><strong>Task 2: Configure package repositories</strong></summary>
 
@@ -319,8 +317,6 @@ yum repolist -v
 Confirmed that the repository metadata was loaded from `/opt/rhcsa-repo/`, and marked Task 02 as `Done` in the exam simulator.
 
 </details>
-
----
 
 <details markdown="1">
 <summary><strong>Task 3: Configuring and Securing an Apache HTTP Service</strong></summary>
