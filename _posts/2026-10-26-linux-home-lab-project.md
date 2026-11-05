@@ -743,3 +743,113 @@ chmod 2770 /home/manager
 - **Others (`0`)**: No permissions (`---`) for any other users on the system.
 
 </details>
+
+<details markdown="1">
+<summary><strong>Task 7: Configure Time Synchronization with Chrony</strong></summary>
+
+```text
+Configure your system
+
+Requirements:
+- Configure this system to synchronise its time from the NTP server:
+    ntp1.example.com
+- Use the iburst option on the server line.
+- Ensure the chronyd service is enabled and running.
+```
+
+---
+
+## Step-by-Step Walkthrough
+
+### Step 1: Checking Initial Time and NTP Status
+
+<img src="/assets/img/linux-homelab/47-task07-timedatectl-initial-status.png" width="900" alt="Checking timedatectl status">
+<p style="font-size: 14px; text-align: center; color: #666;">
+  Figure 47: Checking current system time, timezone, and NTP service status using timedatectl.
+</p>
+
+Checked current time synchronization parameters on `node1`:
+```bash
+timedatectl
+```
+The system confirmed active NTP service and current timezone configuration.
+
+---
+
+### Step 2: Inspecting chronyd Service Status
+
+<img src="/assets/img/linux-homelab/48-task07-chronyd-service-status.png" width="900" alt="Checking chronyd status">
+<p style="font-size: 14px; text-align: center; color: #666;">
+  Figure 48: Inspecting chronyd service status showing active but disabled state.
+</p>
+
+Inspected the `chronyd` systemd service status:
+```bash
+systemctl status chronyd
+```
+While active and running, the service unit was marked as `disabled`, meaning it would not survive a reboot without explicit enablement.
+
+---
+
+### Step 3: Enabling the chronyd Service on Boot
+
+<img src="/assets/img/linux-homelab/49-task07-systemctl-enable-chronyd.png" width="900" alt="Enabling chronyd service">
+<p style="font-size: 14px; text-align: center; color: #666;">
+  Figure 49: Enabling chronyd to start automatically at system boot.
+</p>
+
+Enabled and ensured `chronyd` runs automatically upon boot:
+```bash
+systemctl enable --now chronyd
+```
+Systemd created the required symlink in `/etc/systemd/system/multi-user.target.wants/`.
+
+---
+
+### Step 4: Configuring the NTP Server in /etc/chrony.conf
+
+<img src="/assets/img/linux-homelab/50-task07-editing-chrony-conf.png" width="900" alt="Editing /etc/chrony.conf">
+<p style="font-size: 14px; text-align: center; color: #666;">
+  Figure 50: Adding the server directive with iburst in /etc/chrony.conf.
+</p>
+
+Opened `/etc/chrony.conf` and added the specified NTP server with the `iburst` option:
+```bash
+vi /etc/chrony.conf
+```
+Appended the following line to the configuration:
+```text
+server ntp1.example.com iburst
+```
+Saved and exited using `:wq`.
+
+---
+
+### Step 5: Restarting chronyd Service
+
+<img src="/assets/img/linux-homelab/51-task07-restart-chronyd.png" width="900" alt="Restarting chronyd">
+<p style="font-size: 14px; text-align: center; color: #666;">
+  Figure 51: Restarting chronyd service to apply configuration changes.
+</p>
+
+Restarted the service to reload the updated NTP server configuration:
+```bash
+systemctl restart chronyd
+```
+
+---
+
+### Step 6: Verifying Time Synchronization
+
+<img src="/assets/img/linux-homelab/52-task07-timedatectl-verification.png" width="900" alt="Verifying time sync with timedatectl">
+<p style="font-size: 14px; text-align: center; color: #666;">
+  Figure 52: Verifying synchronized system clock and active NTP service.
+</p>
+
+Verified that time synchronization remains active and operational:
+```bash
+timedatectl
+```
+The output confirmed `System clock synchronized: yes` and `NTP service: active`.
+
+</details>
