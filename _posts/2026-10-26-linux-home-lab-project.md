@@ -692,3 +692,54 @@ systemctl status crond
 Confirmed that `crond.service` is active (running) and loaded properly.
 
 </details>
+
+<details markdown="1">
+<summary><strong>Task 6: Configure a Collaboration Directory</strong></summary>
+
+```text
+Collaborative Directory
+
+Requirements:
+- Create the directory "/home/manager".
+- Group ownership of "/home/manager" should go to the "sysadms" group.
+- The directory should have full permission for all members of the "sysadms" group, but not for other users except "root".
+- The SGID (SETGID) bit must be set so that newly created files inherit group ownership from the directory.
+```
+
+---
+
+## Step-by-Step Walkthrough
+
+### Step 1: Creating the Directory and Setting Group Ownership
+
+<img src="/assets/img/linux-homelab/45-task06-mkdir-chown-sysadms.png" width="900" alt="Creating /home/manager and changing group to sysadms">
+<p style="font-size: 14px; text-align: center; color: #666;">
+  Figure 45: Creating the /home/manager directory and setting group ownership to sysadms.
+</p>
+
+Created the requested directory `/home/manager` and changed its group ownership to `sysadms`:
+```bash
+mkdir -p /home/manager
+chown :sysadms /home/manager
+```
+
+---
+
+### Step 2: Configuring Permissions with the SGID Bit
+
+<img src="/assets/img/linux-homelab/46-task06-chmod-sgid-permissions.png" width="900" alt="Setting SGID bit and 2770 permissions">
+<p style="font-size: 14px; text-align: center; color: #666;">
+  Figure 46: Applying SGID bit and 2770 permissions on /home/manager.
+</p>
+
+Configured directory permissions using numeric mode `2770`:
+```bash
+chmod 2770 /home/manager
+```
+
+- **Special permission (`2`)**: Sets the SGID (Set Group ID) bit (`chmod g+s`), ensuring that any files and subdirectories created inside `/home/manager` automatically inherit the `sysadms` group ownership rather than the primary group of the creating user.
+- **Owner (`7`)**: Full `rwx` permissions for the directory owner (`root`).
+- **Group (`7`)**: Full `rwx` permissions for members of `sysadms`.
+- **Others (`0`)**: No permissions (`---`) for any other users on the system.
+
+</details>
