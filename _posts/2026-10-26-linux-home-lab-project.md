@@ -952,3 +952,64 @@ systemctl restart autofs
 With AutoFS active, any command attempting to access `/rhome/remoteuser5` dynamically triggers the NFS mount from `node5.domain250.example.com`, unmounting automatically after an idle period.
 
 </details>
+
+<details markdown="1">
+<summary><strong>Task 9: Locate and Copy Files Matching Ownership Criteria</strong></summary>
+
+```text
+Locate Files
+
+Requirements:
+- Find all files and directories created by or owned by user "natasha".
+- Copy all identified files and directories into the /root/files directory.
+```
+
+---
+
+## Step-by-Step Walkthrough
+
+### Step 1: Creating the Destination Directory
+
+<img src="/assets/img/linux-homelab/58-task09-mkdir-find-user-natasha.png" width="900" alt="Creating target directory and preparing find command">
+<p style="font-size: 14px; text-align: center; color: #666;">
+  Figure 58: Creating the /root/files target directory and preparing the find command with -exec cp.
+</p>
+
+Created the destination directory `/root/files` to store all matching files and directories:
+```bash
+mkdir -p /root/files
+```
+The `-p` flag guarantees the directory is created if missing and avoids errors if it already exists.
+
+---
+
+### Step 2: Locating and Copying Matching Files and Directories
+
+<img src="/assets/img/linux-homelab/59-task09-find-exec-cp-verify.png" width="900" alt="Executing find with -exec cp and verifying with ls">
+<p style="font-size: 14px; text-align: center; color: #666;">
+  Figure 59: Executing the find command to copy matching files and verifying contents in /root/files.
+</p>
+
+Searched the entire filesystem hierarchy (`/`) for objects owned by user `natasha` and copied them into `/root/files`:
+```bash
+find / -user natasha -exec cp -av {} /root/files \;
+```
+
+- `/`: Searches the root filesystem recursively.
+- `-user natasha`: Filters for files and directories owned by user `natasha`.
+- `-exec cp -av {} /root/files \;`: Executes `cp` on each matched item. The `-a` (archive) flag preserves file permissions, ownership, and modification timestamps while recursively copying directories, `-v` outputs verbose logs of copied items, `{}` acts as the placeholder for each matched path, and `\;` terminates the `-exec` expression.
+
+> [!NOTE]
+> Transient warning messages from virtual filesystems such as `/proc` and `/run` are normal during system-wide searches as kernel processes and user runtime sessions dynamically generate and delete temporary descriptors.
+
+---
+
+### Step 3: Verifying Copied Files in the Destination Directory
+
+Verified the contents inside `/root/files` using `ls -l`:
+```bash
+ls -l /root/files
+```
+The output confirmed that user `natasha`'s mail spool, directory structure, and configuration files were successfully copied into `/root/files`.
+
+</details>
