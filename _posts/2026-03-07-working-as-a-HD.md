@@ -56,6 +56,11 @@ For larger field operations, technical coverage expanded into dedicated mobile b
 Mobile communications and broadcasting truck infrastructure
 </p>
 
+<img src="/assets/img/SGT_jsong6.jpeg" width="750" alt="Field Network Console and Operations" style="display: block; margin: 0 auto;">
+<p style="font-size: 14px; text-align: center; color: #666;">
+On-site network console monitoring and system operations inside the vehicle
+</p>
+
 ## Conclusion
 Serving in an IT Helpdesk and technical field support role was demanding, yet it proved to be an invaluable foundation. I developed deep confidence in operating across diverse OS platforms, handling sudden hardware failures under pressure, and methodically troubleshooting network and peripheral issues.
 
