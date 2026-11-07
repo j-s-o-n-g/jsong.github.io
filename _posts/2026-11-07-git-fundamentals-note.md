@@ -6,6 +6,11 @@ tags: [git, github, vcs, version-control]     # TAG names should always be lower
 comments: true
 ---
 
+<img src="/assets/img/git-basic/git-logo.png" width="450" alt="Git Logo" style="display: block; margin: 0 auto;">
+<p style="font-size: 14px; text-align: center; color: #666;">
+  Git Distributed Version Control System
+</p>
+
 I created this note as a practical reference documenting the core Git commands and workflows I actively use to build, maintain, and publish the very site you are viewing right now on [jaekuk.com](https://jaekuk.com).
 
 While managing this Jekyll-based blog and deploying it through GitHub Pages, I rely on Git daily to draft write-ups, stage articles and assets, handle branch updates, and push changes directly from my terminal. This guide compiles those essential hands-on workflows alongside foundational Git concepts—from repository initialization and the three-tree architecture (Working Directory, Staging Area, and Local Repository) to `.gitignore` rules, commit history navigation, undo operations (`reset` vs. `revert`), and remote GitHub collaboration—illustrated with real terminal outputs and screenshots captured from my workspace.
