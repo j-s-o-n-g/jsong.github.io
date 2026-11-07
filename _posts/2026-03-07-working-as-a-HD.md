@@ -51,7 +51,7 @@ Field dispatch and mobile tactical IT support
 ## Mobile Communications & Broadcasting Infrastructure
 For larger field operations, technical coverage expanded into dedicated mobile broadcasting and communications vehicles. These specialized OB trucks housed complete network racks with switches, routers, transmission hardware, and optical fiber patch bays. Keeping the underlying network and audio/video pipeline stable under live conditions taught me how vital disciplined cabling, power distribution, and real-time infrastructure monitoring truly are.
 
-<img src="/assets/img/SGT_jsong5.jpeg" width="750" alt="Mobile Communications Truck" style="display: block; margin: 0 auto;">
+<img src="/assets/img/SGT_jsong5.png" width="750" alt="Mobile Communications Truck" style="display: block; margin: 0 auto;">
 <p style="font-size: 14px; text-align: center; color: #666;">
 Mobile communications and broadcasting truck infrastructure
 </p>
