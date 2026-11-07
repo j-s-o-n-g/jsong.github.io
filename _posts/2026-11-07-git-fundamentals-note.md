@@ -6,9 +6,9 @@ tags: [git, github, vcs, version-control]     # TAG names should always be lower
 comments: true
 ---
 
-I created these notes as a structured reference and recap of Git and GitHub fundamentals. Version control is an indispensable foundation of modern software engineering and systems administration, enabling precise tracking of file changes, safe experimentation through branching, and seamless collaboration across distributed teams.
+I created this note as a practical reference documenting the core Git commands and workflows I actively use to build, maintain, and publish the very site you are viewing right now on [jaekuk.com](https://jaekuk.com).
 
-This guide compiles essential Git concepts and commands—from repository initialization and the three-tree architecture (Working Directory, Staging Area, and Local Repository) to ignoring files with `.gitignore`, inspecting historical commit graphs, recovering from errors (`reset` vs. `revert`), managing branch workflows, and synchronizing with remote repositories on GitHub—formatted with practical command examples, terminal output breakdowns, and real terminal screenshots captured during practice.
+While managing this Jekyll-based blog and deploying it through GitHub Pages, I rely on Git daily to draft write-ups, stage articles and assets, handle branch updates, and push changes directly from my terminal. This guide compiles those essential hands-on workflows alongside foundational Git concepts—from repository initialization and the three-tree architecture (Working Directory, Staging Area, and Local Repository) to `.gitignore` rules, commit history navigation, undo operations (`reset` vs. `revert`), and remote GitHub collaboration—illustrated with real terminal outputs and screenshots captured from my workspace.
 
 <details markdown="1">
 <summary><strong>Note 1: Environment Setup and Initializing a Git Repository</strong></summary>
