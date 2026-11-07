@@ -8,10 +8,12 @@ comments: true
 
 I created these notes as a structured reference and recap of Git and GitHub fundamentals. Version control is an indispensable foundation of modern software engineering and systems administration, enabling precise tracking of file changes, safe experimentation through branching, and seamless collaboration across distributed teams.
 
-This guide compiles essential Git concepts and commands—from repository initialization and the three-tree architecture (Working Directory, Staging Area, and Local Repository) to ignoring files with `.gitignore`, inspecting historical commit graphs, recovering from errors (`reset` vs. `revert`), managing branch workflows, and synchronizing with remote repositories on GitHub—formatted with practical command examples, terminal output breakdowns, and screenshot integration placeholders.
+This guide compiles essential Git concepts and commands—from repository initialization and the three-tree architecture (Working Directory, Staging Area, and Local Repository) to ignoring files with `.gitignore`, inspecting historical commit graphs, recovering from errors (`reset` vs. `revert`), managing branch workflows, and synchronizing with remote repositories on GitHub—formatted with practical command examples, terminal output breakdowns, and real terminal screenshots captured during practice.
 
 <details markdown="1">
 <summary><strong>Note 1: Environment Setup and Initializing a Git Repository</strong></summary>
+
+> **Quick Summary:** Configuring global author identity and initializing an empty local folder into a tracked Git repository.
 
 ## 1. Git Overview and Command-Line Interface (CLI)
 
@@ -20,13 +22,6 @@ This guide compiles essential Git concepts and commands—from repository initia
 When working with Git, commands fall into two distinct categories:
 - **Git Commands**: Commands starting with `git` that interact with the version control engine (e.g., `git init`, `git status`, `git commit`).
 - **System / Shell Commands**: Operating system utilities used for file and directory navigation (e.g., `cd`, `ls`, `mkdir`, `touch`).
-
-<!-- [Screenshot Placeholder: 01-git-version-check.png] -->
-<img src="/assets/img/git-basic/01-git-version-check.png" width="900" alt="Checking Git installation and version">
-
-<p style="font-size: 14px; text-align: center; color: #666;">
-  Verifying Git installation and checking the active CLI version
-</p>
 
 ```bash
 # Verify Git installation and version
@@ -64,13 +59,6 @@ user.email=jay@example.com
 - `user.email`: Connects local commits to hosting platforms like GitHub.
 - `--global`: Applies settings to all repositories for the current OS user. Omitting `--global` applies the configuration only to the current repository (`.git/config`).
 
-<!-- [Screenshot Placeholder: 02-git-config-setup.png] -->
-<img src="/assets/img/git-basic/02-git-config-setup.png" width="900" alt="Configuring user identity with git config">
-
-<p style="font-size: 14px; text-align: center; color: #666;">
-  Configuring global author name and email in the terminal
-</p>
-
 ---
 
 ## 3. Creating and Initializing a Repository
@@ -107,17 +95,12 @@ drwxr-xr-x   9 jay  staff   288 Nov  7 14:00 .git
 - `git init`: Transforms an ordinary folder into an active Git repository.
 - `.git`: The internal metadata store. Deleting this folder removes the entire version history and leaves only unversioned working files.
 
-<!-- [Screenshot Placeholder: 03-git-init.png] -->
-<img src="/assets/img/git-basic/03-git-init.png" width="900" alt="Initializing a Git repository">
-
-<p style="font-size: 14px; text-align: center; color: #666;">
-  Initializing an empty repository and inspecting the hidden .git directory
-</p>
-
 </details>
 
 <details markdown="1">
 <summary><strong>Note 2: Git Architecture and File Tracking Workflow</strong></summary>
+
+> **Quick Summary:** Managing the end-to-end lifecycle of file modifications across the Working Directory, Staging Area, and Local Repository.
 
 ## 1. The Three Architecture Areas
 
@@ -146,98 +129,110 @@ Files inside the Working Directory exist in one of several states:
 - **Modified**: A tracked file whose contents have been modified since the last commit.
 - **Staged**: A modified or newly created file marked for inclusion in the upcoming commit.
 
-```bash
-# Create sample documents
-touch curriculum.txt
-echo "1. Git Fundamentals" >> curriculum.txt
+In code editors and IDEs, untracked files are highlighted in green and labeled with a `U` indicator in the file tree:
 
+<img src="/assets/img/git-basic/01-git-untracked-explorer.png" width="900" alt="Untracked files indicated with U badge in file explorer">
+
+<p style="font-size: 14px; text-align: center; color: #666;">
+  Identifying newly created, untracked files marked with 'U' in the code editor's file explorer
+</p>
+
+Checking the repository status from the terminal with `git status` lists newly created items in red under the **Untracked files** header:
+
+```bash
 # Inspect working tree status
 git status
 ```
 
 ```text
 On branch main
-
-No commits yet
+Your branch is up to date with 'origin/main'.
 
 Untracked files:
   (use "git add <file>..." to include in what will be committed)
-	curriculum.txt
+	_posts/2026-11-07-git-fundamentals-note.md
+	assets/img/git-basic/
 
 nothing added to commit but untracked files present (use "git add" to track)
 ```
 
-<!-- [Screenshot Placeholder: 04-git-status-untracked.png] -->
-<img src="/assets/img/git-basic/04-git-status-untracked.png" width="900" alt="Git status showing untracked files">
+<img src="/assets/img/git-basic/02-git-status-untracked.png" width="900" alt="git status displaying untracked files">
 
 <p style="font-size: 14px; text-align: center; color: #666;">
-  Checking working directory status and observing newly created untracked files
+  Inspecting the working directory with git status to verify untracked files before staging
 </p>
 
 ---
 
 ## 3. Staging and Committing Changes
 
-Moving changes into the permanent history requires a two-step process: **staging** with `git add`, followed by **committing** with `git commit`.
+Moving changes into permanent history requires a two-step process: **staging** with `git add`, followed by **committing** with `git commit`.
 
 ```bash
-# Add file to the staging area
-git add curriculum.txt
+# Add all untracked and modified files to the staging area
+git add .
+```
 
-# Verify staging status
+<img src="/assets/img/git-basic/03-git-add-staging.png" width="900" alt="Staging untracked files with git add">
+
+<p style="font-size: 14px; text-align: center; color: #666;">
+  Adding all modified and untracked files to the staging area (index) using git add .
+</p>
+
+After staging, running `git status` confirms that the files have moved into the Staging Area, displayed in green under `Changes to be committed`:
+
+```bash
+# Verify staged status in the index
 git status
 ```
 
 ```text
 On branch main
-
-No commits yet
+Your branch is up to date with 'origin/main'.
 
 Changes to be committed:
-  (use "git rm --cached <file>..." to unstage)
-	new file:   curriculum.txt
+  (use "git restore --staged <file>..." to unstage)
+	new file:   _posts/2026-11-07-git-fundamentals-note.md
+	new file:   assets/img/git-basic/.gitkeep
 ```
+
+<img src="/assets/img/git-basic/04-git-status-staged.png" width="900" alt="git status displaying changes staged for commit">
+
+<p style="font-size: 14px; text-align: center; color: #666;">
+  Confirming staged changes marked in green under 'Changes to be committed' via git status
+</p>
+
+Once the staging area contains the desired files, execute `git commit -m` to create a permanent snapshot in the local repository:
 
 ```bash
 # Record snapshot to local repository with a descriptive message
-git commit -m "docs: add initial curriculum draft"
+git commit -m "Linux Project Update"
 ```
 
 ```text
-[main (root-commit) 8f31b0a] docs: add initial curriculum draft
- 1 file changed, 1 insertion(+)
- create mode 100644 curriculum.txt
+[main 23019f1] Linux Project Update
+ 2 files changed, 874 insertions(+)
+ create mode 100644 _posts/2026-11-07-git-fundamentals-note.md
+ create mode 100644 assets/img/git-basic/.gitkeep
 ```
 
-```bash
-# Check repository history
-git log
-```
-
-```text
-commit 8f31b0ae178051e94474325a7d74db191a7e289c (HEAD -> main)
-Author: Jay Song <jay@example.com>
-Date:   Sat Nov 7 14:05:12 2026 +0900
-
-    docs: add initial curriculum draft
-```
-
-### Breakdown
-- `git add <file>`: Copies the file snapshot from the Working Directory into the Staging Area.
-- `git commit -m "<message>"`: Permanently stores staged files as an immutable commit record. The `-m` flag specifies the commit message inline.
-- `git log`: Displays sequential commit history in reverse chronological order.
-
-<!-- [Screenshot Placeholder: 05-git-add-commit.png] -->
-<img src="/assets/img/git-basic/05-git-add-commit.png" width="900" alt="Staging files and recording commits">
+<img src="/assets/img/git-basic/05-git-commit-local.png" width="900" alt="Creating a commit snapshot with git commit">
 
 <p style="font-size: 14px; text-align: center; color: #666;">
-  Promoting changes to the staging area and recording a permanent commit
+  Recording staged changes into the local repository with git commit -m to create an immutable snapshot
 </p>
+
+### Breakdown
+- `git add <file>` / `git add .`: Copies file snapshots from the Working Directory into the Staging Area.
+- `git commit -m "<message>"`: Permanently stores staged files as an immutable commit record.
+- `git log`: Displays sequential commit history in reverse chronological order.
 
 </details>
 
 <details markdown="1">
 <summary><strong>Note 3: Excluding Files with .gitignore</strong></summary>
+
+> **Quick Summary:** Defining pattern rules in `.gitignore` to prevent sensitive files, build artifacts, and system caches from being tracked.
 
 ## 1. Why Ignore Files?
 
@@ -313,17 +308,12 @@ git commit -m "chore: add .gitignore file"
 - `temp/*.txt`: Ignores `.txt` files directly under `temp/`, but not subdirectories.
 - `!important.log`: Negates an earlier pattern, forcing Git to track `important.log` even if `*.log` is ignored.
 
-<!-- [Screenshot Placeholder: 06-gitignore-demonstration.png] -->
-<img src="/assets/img/git-basic/06-gitignore-demonstration.png" width="900" alt="Demonstration of .gitignore file">
-
-<p style="font-size: 14px; text-align: center; color: #666;">
-  Testing .gitignore rules and confirming excluded files are omitted from git status
-</p>
-
 </details>
 
 <details markdown="1">
 <summary><strong>Note 4: Inspecting and Navigating Commit History</strong></summary>
+
+> **Quick Summary:** Reviewing commit logs, inspecting cryptographic checksums, analyzing line diffs, and traversing historical states.
 
 ## 1. Anatomy of a Commit
 
@@ -359,13 +349,6 @@ Date:   Sat Nov 7 14:05:12 2026 +0900
 - **Author Information**: The identity set via `git config`.
 - **Timestamp**: Date and time when the snapshot was recorded.
 - **Commit Message**: A descriptive explanation of what changed.
-
-<!-- [Screenshot Placeholder: 07-git-log-anatomy.png] -->
-<img src="/assets/img/git-basic/07-git-log-anatomy.png" width="900" alt="Anatomy of git log commit entries">
-
-<p style="font-size: 14px; text-align: center; color: #666;">
-  Inspecting commit hashes, author headers, timestamps, and HEAD pointers
-</p>
 
 ---
 
@@ -459,17 +442,12 @@ b4e12da HEAD@{3}: commit: chore: add .gitignore file
 8f31b0a HEAD@{4}: commit (initial): docs: add initial curriculum draft
 ```
 
-<!-- [Screenshot Placeholder: 08-git-checkout-reflog.png] -->
-<img src="/assets/img/git-basic/08-git-checkout-reflog.png" width="900" alt="Navigating commits and using git reflog">
-
-<p style="font-size: 14px; text-align: center; color: #666;">
-  Switching to historical commits (detached HEAD) and inspecting reference logs with reflog
-</p>
-
 </details>
 
 <details markdown="1">
 <summary><strong>Note 5: Handling Mistakes and Undoing Changes (Reset vs. Revert)</strong></summary>
+
+> **Quick Summary:** Safely correcting mistakes by unstaging files, moving commit pointers (`reset`), or applying inverse commits (`revert`).
 
 ## 1. Unstaging Files (`git reset`)
 
@@ -536,13 +514,6 @@ git reset --hard HEAD~1
 > [!WARNING]
 > `git reset --hard` completely overwrites uncommitted modifications in your Working Directory. Use this option only when you intend to discard all recent code changes permanently.
 
-<!-- [Screenshot Placeholder: 09-git-reset-modes.png] -->
-<img src="/assets/img/git-basic/09-git-reset-modes.png" width="900" alt="Demonstrating git reset modes">
-
-<p style="font-size: 14px; text-align: center; color: #666;">
-  Comparing behaviors of git reset --soft, --mixed, and --hard
-</p>
-
 ---
 
 ## 3. Safely Reversing Commits with `git revert`
@@ -574,17 +545,12 @@ b4e12da chore: add .gitignore file
 - **Use `git reset`**: When working locally on personal branches before code has been pushed to a remote repository.
 - **Use `git revert`**: When changes have already been pushed to a shared remote repository (e.g., `main`), ensuring collaborator branches are not broken by rewritten history.
 
-<!-- [Screenshot Placeholder: 10-git-revert.png] -->
-<img src="/assets/img/git-basic/10-git-revert.png" width="900" alt="Undoing changes safely with git revert">
-
-<p style="font-size: 14px; text-align: center; color: #666;">
-  Reverting an unwanted commit and preserving an audit-safe public history
-</p>
-
 </details>
 
 <details markdown="1">
 <summary><strong>Note 6: Branch Management and Merging Workflows</strong></summary>
+
+> **Quick Summary:** Developing features in isolated branch sandboxes and integrating tested updates via fast-forward or 3-way merges.
 
 ## 1. What is a Git Branch?
 
@@ -662,13 +628,6 @@ d14a82f (main) Revert "feat: complete section 2 draft"
 
 Notice that `HEAD` points to `feature/curriculum-update`, while `main` remains at the previous commit.
 
-<!-- [Screenshot Placeholder: 11-git-branch-creation.png] -->
-<img src="/assets/img/git-basic/11-git-branch-creation.png" width="900" alt="Creating and switching between Git branches">
-
-<p style="font-size: 14px; text-align: center; color: #666;">
-  Creating a feature branch and making isolated commits away from the main branch
-</p>
-
 ---
 
 ## 4. Merging Branches and Handling Conflicts
@@ -712,17 +671,12 @@ git branch -d feature/curriculum-update
 Deleted branch feature/curriculum-update (was a75de31).
 ```
 
-<!-- [Screenshot Placeholder: 12-git-merge-fastforward.png] -->
-<img src="/assets/img/git-basic/12-git-merge-fastforward.png" width="900" alt="Merging a branch into main and deleting it">
-
-<p style="font-size: 14px; text-align: center; color: #666;">
-  Fast-forward merging feature branches into main and cleaning up stale pointers
-</p>
-
 </details>
 
 <details markdown="1">
 <summary><strong>Note 7: Remote Repositories and GitHub Collaboration</strong></summary>
+
+> **Quick Summary:** Connecting local repositories to cloud remotes on GitHub to publish commits and collaborate across distributed teams.
 
 ## 1. Local vs. Remote Repositories
 
@@ -768,13 +722,6 @@ origin  https://github.com/your-username/git-practice.git (push)
 - `origin`: The standard default alias assigned to the primary remote server.
 - `-v` (`--verbose`): Displays the full fetch and push URLs associated with each remote alias.
 
-<!-- [Screenshot Placeholder: 13-git-remote-add.png] -->
-<img src="/assets/img/git-basic/13-git-remote-add.png" width="900" alt="Adding remote GitHub repository with git remote add">
-
-<p style="font-size: 14px; text-align: center; color: #666;">
-  Registering remote origin URL and verifying remote connection endpoints
-</p>
-
 ---
 
 ## 3. Pushing Changes (`git push`)
@@ -782,11 +729,8 @@ origin  https://github.com/your-username/git-practice.git (push)
 To upload local commit history to the remote repository, use `git push`. The `-u` (or `--set-upstream`) flag links the local branch to the remote branch, allowing subsequent pushes and pulls to be executed without specifying parameters.
 
 ```bash
-# Rename active branch to main (if default was master)
-git branch -M main
-
 # Push commits and establish upstream tracking
-git push -u origin main
+git push origin main
 ```
 
 ```text
@@ -794,12 +738,18 @@ Enumerating objects: 12, done.
 Counting objects: 100% (12/12), done.
 Delta compression using up to 8 threads
 Compressing objects: 100% (8/8), done.
-Writing objects: 100% (12/12), 1.15 KiB | 1.15 MiB/s, done.
-Total 12 (delta 2), reused 0 (delta 0), pack-reused 0
-To https://github.com/your-username/git-practice.git
- * [new branch]      main -> main
-branch 'main' set up to track 'origin/main'.
+Writing objects: 100% (8/8), 9.37 KiB | 9.37 MiB/s, done.
+Total 8 (delta 3), reused 0 (delta 0), pack-reused 0 (from 0)
+remote: Resolving deltas: 100% (3/3), completed with 3 local objects.
+To https://github.com/j-s-o-n-g/jsong.github.io.git
+   1b2211a..23019f1  main -> main
 ```
+
+<img src="/assets/img/git-basic/06-git-push-remote.png" width="900" alt="Pushing local commits to remote GitHub repository">
+
+<p style="font-size: 14px; text-align: center; color: #666;">
+  Uploading local commits to the remote GitHub repository branch using git push origin main
+</p>
 
 Once upstream tracking is configured, subsequent sync commands require only:
 
@@ -807,13 +757,6 @@ Once upstream tracking is configured, subsequent sync commands require only:
 # Routine push of new local commits
 git push
 ```
-
-<!-- [Screenshot Placeholder: 14-git-push-github.png] -->
-<img src="/assets/img/git-basic/14-git-push-github.png" width="900" alt="Pushing local commits to remote GitHub repository">
-
-<p style="font-size: 14px; text-align: center; color: #666;">
-  Uploading local commits to GitHub and establishing upstream branch tracking
-</p>
 
 ---
 
@@ -863,12 +806,5 @@ remote: Total 15 (delta 3), reused 12 (delta 2)
 Receiving objects: 100% (15/15), 1.78 KiB | 1.78 MiB/s, done.
 Resolving deltas: 100% (3/3), done.
 ```
-
-<!-- [Screenshot Placeholder: 15-git-pull-clone.png] -->
-<img src="/assets/img/git-basic/15-git-pull-clone.png" width="900" alt="Pulling updates and cloning remote repositories">
-
-<p style="font-size: 14px; text-align: center; color: #666;">
-  Synchronizing remote updates with git pull and cloning repositories with git clone
-</p>
 
 </details>
