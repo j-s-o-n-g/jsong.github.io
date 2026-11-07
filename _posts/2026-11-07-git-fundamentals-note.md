@@ -1,5 +1,5 @@
 ---
-title: "Git Fundamentals Note"
+title: "Git Fundamentals Note used to manage my homepage"
 date: 2026-11-07
 categories: [Git]
 tags: [git, github, vcs, version-control]     # TAG names should always be lowercase
