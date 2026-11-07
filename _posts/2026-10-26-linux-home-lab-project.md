@@ -25,214 +25,210 @@ I set up this dual-node virtualization lab to practice hands-on Red Hat Enterpri
 <summary><strong>Task 1: Configure networking and set hostname</strong></summary>
 
 ```text
-configure networking and set hostname
+Configure networking and set hostname
 
-Configure the spare network interface rhcsa0 on this system with the
-following static IPv4 settings, make it start automatically at boot, and
-set the system hostname:
+Configure the network interface enp2s0 on this system with the following
+static IPv4 settings, make it start automatically at boot, and set the
+system hostname:
 
-  IPv4 address : 172.25.250.11/24
+  Host Name    : node1.domain250.example.com
+  IPv4 address : 172.25.250.100
+  Subnet mask  : 255.255.255.0 (/24)
   Gateway      : 172.25.250.254
-  DNS server   : 172.25.250.254
-  Hostname     : node1.lab.network17.com
-
-A connection profile named rhcsa0, already bound to the rhcsa0 interface, is
-present on this system -- configure that profile and keep it bound to rhcsa0.
-rhcsa0 is a dedicated, isolated test interface; do NOT reconfigure the NIC you
-are connected through (e.g. enp1s0), or you will lose access to this system.
+  DNS          : 172.25.250.254
 ```
 
 ---
 
 ## Step-by-Step Walkthrough
 
-### Step 1: Virtual Machine Cluster Setup & Console Verification
+### Step 1: Switching to Root
 
-<img src="/assets/img/linux-homelab/02-vmware-node-verification.png" width="900" alt="Console verification on node1 and node2">
+<img src="/assets/img/linux-homelab/01-task01-su-root.png" width="900" alt="Switching to root user on node1">
 <p style="font-size: 14px; text-align: center; color: #666;">
-  Figure 1: Dual RHEL 9 virtual machines (node1 and node2) running side-by-side in VMware Fusion with active root terminal access.
+  Figure 1: Switching to the root user on node1 with the offline practice console open on the left.
 </p>
 
-Two independent RHEL 9 virtual machines (`node1` on the left, `node2` on the right) are running in VMware Fusion. Each node operates with its own virtual disk, network adapters, and dedicated resources. Logged in as `root` on both machines and ran a quick echo command (`This is node1` and `This is node2`) to confirm terminal responsiveness and ensure commands are directed to the correct node.
+Switched to the `root` account on `node1` to perform system-level network and hostname administration:
+```bash
+su -
+```
 
 ---
 
-### Step 6: Checking Current Network Status
+### Step 2: Checking Current Network Status & Launching `nmtui`
 
-<img src="/assets/img/linux-homelab/06-baseline-nmcli-device-status.png" width="900" alt="nmcli connection show and nmcli device status on node1">
+<img src="/assets/img/linux-homelab/02-task01-nmcli-and-nmtui.png" width="900" alt="Checking nmcli connection show, nmcli device status, and launching nmtui">
 <p style="font-size: 14px; text-align: center; color: #666;">
-  Figure 6: Checking network profiles and devices with nmcli.
+  Figure 2: Checking existing network connections and device status with nmcli before launching nmtui.
 </p>
 
-On `node1`, checked current connections and devices:
+Inspected the active NetworkManager connection profiles and network interfaces on `node1`, then launched `nmtui`:
 ```bash
 nmcli connection show
 nmcli device status
+nmtui
 ```
-* `enp2s0`: Connected ethernet interface.
-* `rhcsa0`: Dummy network interface profile.
+* `enp2s0`: Active Ethernet connection profile bound to the `enp2s0` interface.
 
 ---
 
-### Step 7: Launching `nmtui`
+### Step 3: `nmtui` Main Menu
 
-<img src="/assets/img/linux-homelab/07-launching-nmtui-terminal.png" width="900" alt="Launching nmtui in the terminal">
+<img src="/assets/img/linux-homelab/03-task01-nmtui-main-menu.png" width="900" alt="nmtui main menu">
 <p style="font-size: 14px; text-align: center; color: #666;">
-  Figure 7: Opening the NetworkManager Text User Interface (nmtui).
+  Figure 3: NetworkManager TUI main menu options.
 </p>
 
-Launched `nmtui` in the terminal to configure network settings and hostname via the interactive menu.
+The `nmtui` main menu provides three primary options: **Edit a connection**, **Activate a connection**, and **Set system hostname**. Selected **Edit a connection** to configure the IPv4 settings.
 
 ---
 
-### Step 8: `nmtui` Main Menu
+### Step 4: Selecting the `enp2s0` Connection Profile
 
-<img src="/assets/img/linux-homelab/08-nmtui-menu-interface.png" width="900" alt="nmtui main selection menu">
+<img src="/assets/img/linux-homelab/04-task01-nmtui-select-enp2s0.png" width="900" alt="Selecting enp2s0 in nmtui">
 <p style="font-size: 14px; text-align: center; color: #666;">
-  Figure 8: nmtui main menu options.
+  Figure 4: Selecting the enp2s0 Ethernet profile and choosing Edit.
 </p>
 
-The menu provides three options: **Edit a connection**, **Activate a connection**, and **Set system hostname**. Selected **Edit a connection** to start configuring network parameters.
+Selected the `enp2s0` Ethernet connection profile and navigated to `<Edit>` to modify its configuration.
 
 ---
 
-### Step 9: Selecting Connection to Edit
+### Step 5: Inspecting the Connection Profile
 
-<img src="/assets/img/linux-homelab/09-nmtui-connection-selection.png" width="900" alt="Selecting connection profile in nmtui">
+<img src="/assets/img/linux-homelab/05-task01-nmtui-edit-connection-auto.png" width="900" alt="Edit Connection view showing Automatic IPv4 configuration">
 <p style="font-size: 14px; text-align: center; color: #666;">
-  Figure 9: List of available network connections in nmtui.
+  Figure 5: Initial Edit Connection view for enp2s0 with IPv4 CONFIGURATION set to Automatic.
 </p>
 
-The connection list shows available Ethernet connections (`enp2s0` and `rhcsa0`). Selected `<Edit>` to configure connection details.
+In the **Edit Connection** dialog for `enp2s0`, navigated down to `IPv4 CONFIGURATION`, which is initially set to `<Automatic>`.
 
 ---
 
-### Step 10: Entering Static IPv4 Settings
+### Step 6: Switching IPv4 Configuration to Manual
 
-<img src="/assets/img/linux-homelab/10-nmtui-edit-ipv4-configuration.png" width="900" alt="Editing IPv4 configuration in nmtui">
+<img src="/assets/img/linux-homelab/06-task01-nmtui-ipv4-manual-select.png" width="900" alt="Changing IPv4 configuration from Automatic to Manual">
 <p style="font-size: 14px; text-align: center; color: #666;">
-  Figure 10: Entering manual IPv4 settings, gateway, and DNS servers.
+  Figure 6: Changing IPv4 CONFIGURATION from Automatic to Manual.
 </p>
 
-Configured IPv4 settings to `<Manual>` and entered:
-* **Addresses**: `172.25.250.11/24`
+Opened the `IPv4 CONFIGURATION` dropdown menu and changed the mode from `Automatic` to `Manual` so static IPv4 parameters can be assigned.
+
+---
+
+### Step 7: Expanding Manual IPv4 Configuration Fields
+
+<img src="/assets/img/linux-homelab/07-task01-nmtui-ipv4-show-fields.png" width="900" alt="Expanding IPv4 configuration fields in nmtui">
+<p style="font-size: 14px; text-align: center; color: #666;">
+  Figure 7: Expanding the manual IPv4 configuration section in nmtui.
+</p>
+
+Selected `<Show>` next to `IPv4 CONFIGURATION <Manual>` to reveal the input fields for **Addresses**, **Gateway**, **DNS servers**, and **Search domains**.
+
+---
+
+### Step 8: Entering Static IPv4 Address, Gateway, and DNS
+
+<img src="/assets/img/linux-homelab/08-task01-nmtui-ipv4-static-values.png" width="900" alt="Entering static IPv4 address, gateway, and DNS server in nmtui">
+<p style="font-size: 14px; text-align: center; color: #666;">
+  Figure 8: Entering static IPv4 settings (172.25.250.100/24, gateway 172.25.250.254, DNS 172.25.250.254) and saving.
+</p>
+
+Entered the required static IPv4 settings (converting subnet mask `255.255.255.0` to the `/24` CIDR prefix):
+* **Addresses**: `172.25.250.100/24`
 * **Gateway**: `172.25.250.254`
 * **DNS servers**: `172.25.250.254`
-* Verified that **Automatically connect** is checked.
+* Ensured `[X] Automatically connect` is checked so the interface starts automatically at boot, then selected `<OK>` to save.
 
 ---
 
-### Step 11: Saving Connection Changes
+### Step 9: Reactivating the `enp2s0` Connection
 
-<img src="/assets/img/linux-homelab/11-nmtui-connection-saved.png" width="900" alt="Saving connection profile in nmtui">
+<img src="/assets/img/linux-homelab/09-task01-nmtui-activate-connection.png" width="900" alt="Reactivating enp2s0 in nmtui Activate a connection menu">
 <p style="font-size: 14px; text-align: center; color: #666;">
-  Figure 11: Returning to the connection list after saving.
+  Figure 9: Deactivating and reactivating enp2s0 to apply the new IPv4 settings immediately.
 </p>
 
-Selected `<OK>` to save the configuration changes and returned to the connection menu.
+Returned to the `nmtui` main menu, selected **Activate a connection**, and toggled `enp2s0` (`<Deactivate>` followed by `<Activate>`) to apply the updated static IPv4 configuration immediately.
 
 ---
 
-### Step 12: Setting System Hostname
+### Step 10: Setting the System Hostname
 
-<img src="/assets/img/linux-homelab/12-nmtui-set-hostname-dialog.png" width="900" alt="Setting system hostname via nmtui">
+<img src="/assets/img/linux-homelab/10-task01-nmtui-set-hostname.png" width="900" alt="Setting system hostname in nmtui">
 <p style="font-size: 14px; text-align: center; color: #666;">
-  Figure 12: Entering the hostname node1.lab.network17.com in nmtui.
+  Figure 10: Setting the system hostname to node1.domain250.example.com in nmtui.
 </p>
 
-Navigated back to the main menu, selected **Set system hostname**, and entered `node1.lab.network17.com`.
+From the `nmtui` main menu, selected **Set system hostname**, entered `node1.domain250.example.com`, and selected `<OK>`.
 
 ---
 
-### Step 13: Hostname Confirmation
+### Step 11: Exiting `nmtui`
 
-<img src="/assets/img/linux-homelab/13-nmtui-hostname-confirmed.png" width="900" alt="Hostname update confirmation">
+<img src="/assets/img/linux-homelab/11-task01-nmtui-quit.png" width="900" alt="Exiting nmtui from the main menu">
 <p style="font-size: 14px; text-align: center; color: #666;">
-  Figure 13: Confirmation popup confirming the hostname update.
+  Figure 11: Selecting Quit from the nmtui main menu to return to the terminal.
 </p>
 
-Confirmed that the hostname was updated to `node1.lab.network17.com`. Selected `<OK>` and exited `nmtui`.
+Selected **Quit** (`<OK>`) on the `NetworkManager TUI` main menu to exit back to the root shell.
 
 ---
 
-### Step 14: Verifying IP Address Configuration
+### Step 12: Verifying IPv4 Address Assignment
 
-<img src="/assets/img/linux-homelab/14-verify-ip-addr-discrepancy.png" width="900" alt="ip addr command output">
+<img src="/assets/img/linux-homelab/12-task01-verify-ip-address.png" width="900" alt="Verifying IP address with ip address command">
 <p style="font-size: 14px; text-align: center; color: #666;">
-  Figure 14: Checking IP addresses with ip addr.
+  Figure 12: Verifying the active IPv4 address (172.25.250.100/24) on enp2s0 with ip address.
 </p>
 
-Ran `ip addr` in the terminal to inspect the active network configuration:
+Ran `ip address` to confirm that `enp2s0` has been assigned the static IPv4 address `172.25.250.100/24`:
 ```bash
-ip addr
+ip address
 ```
-Checked the assigned IP addresses on each network interface to verify the changes.
 
 ---
 
-### Step 15: Verifying Routing Table
+### Step 13: Verifying the Routing Table
 
-<img src="/assets/img/linux-homelab/15-verify-ip-route-table.png" width="900" alt="ip route command output">
+<img src="/assets/img/linux-homelab/13-task01-verify-ip-route.png" width="900" alt="Verifying default gateway with ip route">
 <p style="font-size: 14px; text-align: center; color: #666;">
-  Figure 15: Inspecting the kernel routing table with ip route.
+  Figure 13: Inspecting the kernel routing table with ip route.
 </p>
 
-Ran `ip route` to check the default gateway and network routes:
+Ran `ip route` to verify that the default gateway (`172.25.250.254` via `enp2s0`) is active:
 ```bash
 ip route
 ```
-Verified that the default route via `172.25.250.254` is in place.
 
 ---
 
-### Step 16: Verifying Hostname
+### Step 14: Verifying the System Hostname
 
-<img src="/assets/img/linux-homelab/16-verify-hostname-command.png" width="900" alt="hostname command output">
+<img src="/assets/img/linux-homelab/14-task01-verify-hostname.png" width="900" alt="Verifying system hostname with hostname command">
 <p style="font-size: 14px; text-align: center; color: #666;">
-  Figure 16: Checking the active system hostname.
+  Figure 14: Checking the configured system hostname with the hostname command.
 </p>
 
-Ran `hostname` to confirm the active hostname:
+Ran `hostname` to confirm that the system hostname is set to `node1.domain250.example.com`:
 ```bash
 hostname
 ```
-Output returned `node1.lab.network17.com`.
 
 ---
 
-### Step 17: Verifying DNS Configuration
+### Step 15: Verifying DNS Configuration
 
-<img src="/assets/img/linux-homelab/17-verify-resolv-conf-dns.png" width="900" alt="cat /etc/resolv.conf output">
+<img src="/assets/img/linux-homelab/15-task01-verify-resolv-conf.png" width="900" alt="Verifying /etc/resolv.conf">
 <p style="font-size: 14px; text-align: center; color: #666;">
-  Figure 17: Checking /etc/resolv.conf for nameserver entries.
+  Figure 15: Checking /etc/resolv.conf for the configured search domain and DNS nameserver.
 </p>
 
-Verifying that DNS is properly configured.
-
----
-
-### Step 18: Rebooting the System
-
-<img src="/assets/img/linux-homelab/18-execute-reboot-persistence-test.png" width="900" alt="Executing reboot command on node1">
-<p style="font-size: 14px; text-align: center; color: #666;">
-  Figure 18: Executing the reboot command.
-</p>
-
-Issued the `reboot` command to restart the system:
+Checked `/etc/resolv.conf` to verify that NetworkManager updated the DNS configuration with `search domain250.example.com` and `nameserver 172.25.250.254`:
 ```bash
-reboot
+cat /etc/resolv.conf
 ```
-
----
-
-### Step 19: System Rebooting
-
-<img src="/assets/img/linux-homelab/19-rhel-system-rebooting.png" width="900" alt="Red Hat Enterprise Linux boot splash screen">
-<p style="font-size: 14px; text-align: center; color: #666;">
-  Figure 19: RHEL 9 rebooting.
-</p>
-
-If the network configuration remains intact after rebooting, then it's a success!
 
 </details>
 
