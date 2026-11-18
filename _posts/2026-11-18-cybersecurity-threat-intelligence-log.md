@@ -48,7 +48,7 @@ Curated from major security intelligence platforms—including **BoanNews (보�
 
 ## Reverse-Chronological Threat & Remediation Log
 
-### 1. [2026-11-18 | 🇰🇷 KR] Financial Authorities Mandate Bi-Annual Vulnerability Assessments After 37-Firm Breach Wave
+### [2026-11-18 | 🇰🇷 KR] Financial Authorities Mandate Bi-Annual Vulnerability Assessments After 37-Firm Breach Wave
 
 * **Incident & Policy Context:** Following the cascading cyber attacks that began in late September 2026, official parliamentary and Financial Services Commission (FSC) tallies confirmed that **37 financial institutions (40 incidents)** suffered breaches, exposing approximately **470,000 customer and employee records** along with ~1 billion KRW in hot-wallet and account losses. Investigation revealed an average detection gap of **3.9 days (up to 15 days)** between initial intrusion and detection.
 * **Key Findings:** Most intrusions bypassed hardened core banking mainframes and instead compromised **peripheral external systems**—such as loan-solicitor lookup portals, mobile employee support systems, and unauthenticated test pages.
@@ -59,7 +59,7 @@ Curated from major security intelligence platforms—including **BoanNews (보�
 
 ---
 
-### 2. [2026-11-17 | 🇺🇸 US / Global] OpenJDK `Java4Shell` Vulnerability (`CVE-2026-114938`) & US Infrastructure Patch Outages
+### [2026-11-17 | 🇺🇸 US / Global] OpenJDK `Java4Shell` Vulnerability (`CVE-2026-114938`) & US Infrastructure Patch Outages
 
 * **Threat Overview:** On November 17, 2026, a critical memory corruption and remote code execution (RCE) vulnerability dubbed **`Java4Shell` (`CVE-2026-114938`, CVSS 9.2 Critical)** was disclosed in OpenJDK's Base64 decoding and CPU intrinsic acceleration routines. Like October's `PHP2Shell`, AI-assisted vulnerability discovery accelerated both detection and exploit generation.
 * **US Operational Impact ("Patch Fatigue" Outages):** In mid-November, a cascade of high-profile US infrastructure disruptions hit **Microsoft (Outlook/Teams)**, the **Federal Aviation Administration (FAA)**, **United Airlines**, **JPMorgan Chase**, and the **National Security Agency's classified internal network (`NSANet`)**. US officials (including the State Department and intelligence agencies) confirmed that the `NSANet` outage and concurrent disruptions were caused not by direct enemy sabotage, but by **emergency patching overload** as agencies rushed to deploy critical `PHP2Shell` and runtime security updates across complex legacy systems without adequate staging.
@@ -70,7 +70,7 @@ Curated from major security intelligence platforms—including **BoanNews (보�
 
 ---
 
-### 3. [2026-11-12 | 🇰🇷 KR] Kyungil University Faculty Electronic Information System (`gw.kiu.ac.kr`) Breached
+### [2026-11-12 | 🇰🇷 KR] Kyungil University Faculty Electronic Information System (`gw.kiu.ac.kr`) Breached
 
 * **Incident Overview:** Around 8:00 PM on November 12, 2026, **Kyungil University (경일대학교)** detected an external intrusion into its in-house faculty and staff electronic document/groupware system (`gw.kiu.ac.kr`), affecting approximately **600 professors and staff members**.
 * **Threat Actor & Leak Details:** A threat actor operating under the handle **`KimJEN`** posted a thread titled *"108GB kiu.ac.kr data sharing"* on an underground hacking forum and leaked three compressed archives on Telegram totaling ~1 GB: `kiu_ac_kr_mail.zip` (~984.5 MB), `kiu_ac_kr_config.zip` (~1.2 MB), and `db.zip` (~17 MB). The same actor simultaneously claimed attacks against 31 South Korean universities (including regional university research administration systems) ahead of the national college entrance season.
@@ -81,7 +81,7 @@ Curated from major security intelligence platforms—including **BoanNews (보�
 
 ---
 
-### 4. [2026-11-12 | 🌐 Global / 🇰🇷 KR] Synology NAS DDoS, RCE & Ransomware Wave (`CVE-2026-76954` / `13684` / `13639`)
+### [2026-11-12 | 🌐 Global / 🇰🇷 KR] Synology NAS DDoS, RCE & Ransomware Wave (`CVE-2026-76954` / `13684` / `13639`)
 
 * **Threat Overview:** KISA (KrCERT/CC) and Synology issued urgent critical advisories regarding multiple **CVSS 9.8 (Critical)** vulnerabilities in Synology **DiskStation Manager (DSM)**:
   * **`CVE-2026-76954` (CVSS 9.8, disclosed Nov 12):** SQL Injection in the DSM Authentication API allowing unauthenticated remote attackers to read/write arbitrary files, execute code, or trigger **Denial-of-Service (DoS / DDoS)** conditions.
@@ -97,7 +97,7 @@ Curated from major security intelligence platforms—including **BoanNews (보�
 
 ---
 
-### 5. [2026-11-09 | 🇰🇷 KR] South Korea's Frontline Cyber Watchdog—Financial Security Institute (FSI / 금융보안원)—Breached
+### [2026-11-09 | 🇰🇷 KR] South Korea's Frontline Cyber Watchdog—Financial Security Institute (FSI / 금융보안원)—Breached
 
 * **Incident Overview:** On November 9, 2026, the **Financial Security Institute (금융보안원, FSI)**—the very agency responsible for 24/7 security monitoring and incident response across South Korea's financial sector—suffered a targeted intrusion into its **"Ongoing Information Security Assessment Support System" (정보보호 상시 평가 지원 시스템)**.
 * **Attack Vector & Impact:**
@@ -111,7 +111,7 @@ Curated from major security intelligence platforms—including **BoanNews (보�
 
 ---
 
-### 6. [2026-11-03 | 🇪🇺 EU] European Cold-Chain OT Cyber Sabotage: Supermarket Freezers Hacked to +50°C
+### [2026-11-03 | 🇪🇺 EU] European Cold-Chain OT Cyber Sabotage: Supermarket Freezers Hacked to +50°C
 
 * **Incident Overview:** Starting in mid-October in France (**700+ supermarket locations**) and escalating through early November 2026 across **at least 11 European countries** (including Belgium, Luxembourg, Sweden, Germany, Italy, and the UK), attackers executed a coordinated Operational Technology (OT) sabotage campaign against commercial refrigeration and cold-chain control systems.
 * **Physical & Critical Infrastructure Impact:**
@@ -125,7 +125,7 @@ Curated from major security intelligence platforms—including **BoanNews (보�
 
 ---
 
-### 7. [2026-10-30 | 🌐 Global / 🇰🇷 KR] Linux Kernel Critical Vulnerability (`CVE-2026-98432`, CVSS 9.8) — Mandatory Reboot Required
+### [2026-10-30 | 🌐 Global / 🇰🇷 KR] Linux Kernel Critical Vulnerability (`CVE-2026-98432`, CVSS 9.8) — Mandatory Reboot Required
 
 * **Vulnerability Overview:** A critical **CVSS 9.8** Use-After-Free (UAF) vulnerability (**`CVE-2026-98432`**) was identified in the Linux kernel's IPv4 TCP networking stack (3-way handshake SYN race condition, affecting Linux kernel `4.4+`). Security researchers demonstrated that frontier AI models could autonomously chain this flaw against Multipath TCP (MPTCP) listeners to achieve **zero-click remote `root` code execution** without crashing the target kernel—allowing silent, unlimited retries.
 * **Why a Reboot Is Mandatory:** Updating packages via `apt` or `dnf` only writes the new kernel image (`vmlinuz`) to `/boot` on disk. **The vulnerable kernel code remains resident in active RAM** until the operating system is fully rebooted (or hot-patched via `kpatch`/`Canonical Livepatch`).
@@ -151,7 +151,7 @@ uname -r
 
 ---
 
-### 8. [2026-10-26 | 🇺🇸 US] US Healthcare Ransomware Surge: UNM Health Trauma Center & Access Dental Breaches
+### [2026-10-26 | 🇺🇸 US] US Healthcare Ransomware Surge: UNM Health Trauma Center & Access Dental Breaches
 
 * **Incident Overview:** Late October and November 2026 saw a historic surge in cyber attacks against US healthcare infrastructure:
   * **University of New Mexico Health (UNM Health — Oct 26):** A cyber attack forced New Mexico's only **Level-1 trauma center** to divert incoming ambulances, cancel elective surgeries, and shut down clinical network operations before emergency containment restored core services the following day.
@@ -163,7 +163,7 @@ uname -r
 
 ---
 
-### 9. [2026-10-21 | 🌐 Global / 🇺🇸 US / 🇰🇷 KR] PHP Critical RCE `PHP2Shell` (`CVE-2026-109618` & `CVE-2026-109619`)
+### [2026-10-21 | 🌐 Global / 🇺🇸 US / 🇰🇷 KR] PHP Critical RCE `PHP2Shell` (`CVE-2026-109618` & `CVE-2026-109619`)
 
 * **Vulnerability Overview:** Disclosed on October 21, 2026, and immediately added to the **US CISA Known Exploited Vulnerabilities (KEV)** catalog and KISA alerts, **`PHP2Shell`** comprises two critical flaws (**CVSS 9.2 Critical**):
   * **`CVE-2026-109618`:** Out-of-Memory (OOM) exception handling flaw leading to memory corruption and pre-auth RCE.
@@ -188,7 +188,7 @@ sudo systemctl restart apache2
 
 ---
 
-### 10. [2026-10-08 | 🇰🇷 KR] Massive AI-Driven Financial Sector Cyber Attack (`ARTEX` + `DeepSeek` + `Claude Code` Exposure)
+### [2026-10-08 | 🇰🇷 KR] Massive AI-Driven Financial Sector Cyber Attack (`ARTEX` + `DeepSeek` + `Claude Code` Exposure)
 
 * **Incident Timeline & Scope:**
   * **Sep 27 – Sep 30, 2026 (Initial Intrusions Confirmed):** Coordinated anomalous traffic and data exfiltration hit major South Korean commercial banks—starting with **KB Kookmin Bank (Sep 27)**, **Shinhan Bank (Sep 28–30, ~25,000 loan-solicitor service records)**, and **Hana Bank (Sep 30)**—before spreading to **BNK Busan Bank, Hyundai Capital, Yegaram Savings Bank, KDB Capital, DB Savings Bank, DaeShin Securities, Mirae Asset, and Bithumb** (16 institutions initially confirmed by Oct 14; later expanding to 37 firms).
@@ -222,11 +222,11 @@ flowchart LR
 
 ---
 
-### 11. [2026-09-09 ~ 2026-10-06 | 🇰🇷 KR] Toss Security Audit: 1-Year Prior Reconnaissance Logs & Toss Payments Merchant Key Leak
+### [2026-09-09 ~ 2026-10-06 | 🇰🇷 KR] Toss Security Audit: 1-Year Prior Reconnaissance Logs & Toss Payments Merchant Key Leak
 
 * **Incident Context (Why "Toss 1 Year Ago" Made Headlines During the Audit):**
-  * **1) Long-Term Dormant IP Reconnaissance (~1 Year of Logs Audited):** Following the late-September bank breaches, financial authorities shared attacker IP Indicators of Compromise (IOCs) across all financial firms. When **Toss Bank** audited its historical connection logs stretching back to the beginning of the year (**up to 1 year of log retention scrutinized during the October National Assembly audit**), it discovered that two US-based attacker IPs used in the Shinhan Bank breach had already probed Toss Bank's internal servers **3 times in January and 11 times in July–August**. While Toss Bank's firewall blocked all 14 attempts with zero data loss, lawmakers highlighted that attackers conduct reconnaissance up to **a year in advance**, exposing the danger of short (3-month) log retention windows and lack of mandatory real-time IOC sharing.
-  * **2) Toss Payments Merchant API Key Exposure (Sep 9 & Oct 6 National Assembly Audit):** Separately, on September 9, 2026, an attacker exploited an exposed payment integration key (`연동키`) on a **Toss Payments** merchant website to query **4,131 payment receipts (2,671 customers: names, masked card numbers, approval numbers)**. During the October 6 parliamentary audit, lawmakers criticized Toss Payments because its Fraud Detection System (FDS) failed to alert on the bulk receipt scraping.
+  * **Long-Term Dormant IP Reconnaissance (~1 Year of Logs Audited):** Following the late-September bank breaches, financial authorities shared attacker IP Indicators of Compromise (IOCs) across all financial firms. When **Toss Bank** audited its historical connection logs stretching back to the beginning of the year (**up to 1 year of log retention scrutinized during the October National Assembly audit**), it discovered that two US-based attacker IPs used in the Shinhan Bank breach had already probed Toss Bank's internal servers **3 times in January and 11 times in July–August**. While Toss Bank's firewall blocked all 14 attempts with zero data loss, lawmakers highlighted that attackers conduct reconnaissance up to **a year in advance**, exposing the danger of short (3-month) log retention windows and lack of mandatory real-time IOC sharing.
+  * **Toss Payments Merchant API Key Exposure (Sep 9 & Oct 6 National Assembly Audit):** Separately, on September 9, 2026, an attacker exploited an exposed payment integration key (`연동키`) on a **Toss Payments** merchant website to query **4,131 payment receipts (2,671 customers: names, masked card numbers, approval numbers)**. During the October 6 parliamentary audit, lawmakers criticized Toss Payments because its Fraud Detection System (FDS) failed to alert on the bulk receipt scraping.
 * **Solution / Remediation:**
   1. **Mandate $\ge 1$-Year Security Log Retention & Retroactive Threat Hunting:** Retain firewall, SSH, and web access logs for at least **12 months** to detect slow, low-and-slow APT reconnaissance that precedes major campaigns by months or a year.
   2. **Enforce Additional Verification on Receipt/Transaction Lookups:** Never allow payment receipt URLs or merchant API keys alone to return customer PII; require secondary verification (buyer name, exact payment amount, or email/SMS challenge) as implemented by Toss Payments post-audit.
