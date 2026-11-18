@@ -1,0 +1,162 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 540" width="100%" height="100%" style="background:#080d1a; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#070b14"/>
+      <stop offset="50%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#090f1d"/>
+    </linearGradient>
+    <linearGradient id="headerBar" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ef4444"/>
+      <stop offset="45%" stop-color="#f59e0b"/>
+      <stop offset="100%" stop-color="#06b6d4"/>
+    </linearGradient>
+    <linearGradient id="cardCrit" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e1b2e"/>
+      <stop offset="100%" stop-color="#131826"/>
+    </linearGradient>
+    <linearGradient id="cardBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#131c31"/>
+      <stop offset="100%" stop-color="#0d1424"/>
+    </linearGradient>
+    <filter id="glowRed" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+    <filter id="glowCyan" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M 32 0 L 0 0 0 32" fill="none" stroke="#1e293b" stroke-width="0.6" stroke-opacity="0.55"/>
+    </pattern>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1100" height="540" rx="14" fill="url(#bgGrad)"/>
+  <rect width="1100" height="540" rx="14" fill="url(#grid)"/>
+  <rect x="1" y="1" width="1098" height="538" rx="13" fill="none" stroke="#1e293b" stroke-width="1.5"/>
+
+  <!-- Top Accent Line -->
+  <rect x="0" y="0" width="1100" height="4" rx="2" fill="url(#headerBar)"/>
+
+  <!-- Header Section -->
+  <g transform="translate(32, 26)">
+    <!-- Live Status Pill -->
+    <rect x="0" y="0" width="174" height="24" rx="12" fill="#ef4444" fill-opacity="0.15" stroke="#ef4444" stroke-width="1"/>
+    <circle cx="14" cy="12" r="4.5" fill="#ef4444" filter="url(#glowRed)"/>
+    <text x="26" y="16" fill="#fca5a5" font-size="10.5" font-weight="700" letter-spacing="1.1">THREAT INTEL RADAR</text>
+
+    <text x="190" y="16" fill="#64748b" font-size="11.5" font-family="monospace">COVERAGE: SEP 2025 – NOV 2026 | REGIONS: KR · US · EU</text>
+
+    <!-- Title & Subtitle -->
+    <text x="0" y="52" fill="#f8fafc" font-size="23" font-weight="800" letter-spacing="-0.3">Major Cyber Attacks &amp; Critical Vulnerabilities Overview</text>
+    <text x="0" y="74" fill="#94a3b8" font-size="13">Chronological intelligence tracking from the AI-driven Korean financial sector wave to critical zero-click RCEs &amp; OT sabotage</text>
+  </g>
+
+  <!-- KPI Summary Strip -->
+  <g transform="translate(32, 118)">
+    <!-- KPI 1 -->
+    <rect x="0" y="0" width="248" height="72" rx="10" fill="url(#cardBg)" stroke="#ef4444" stroke-opacity="0.45" stroke-width="1.2"/>
+    <text x="18" y="24" fill="#94a3b8" font-size="11" font-weight="600" letter-spacing="0.6">MAX CVSS SEVERITY</text>
+    <text x="18" y="54" fill="#f87171" font-size="26" font-weight="800" font-family="monospace">9.8 <tspan font-size="13" fill="#fca5a5" font-weight="600">CRITICAL</tspan></text>
+    <text x="160" y="24" fill="#ef4444" font-size="10" font-family="monospace" text-anchor="end">KERNEL / DSM</text>
+
+    <!-- KPI 2 -->
+    <rect x="263" y="0" width="248" height="72" rx="10" fill="url(#cardBg)" stroke="#f59e0b" stroke-opacity="0.45" stroke-width="1.2"/>
+    <text x="281" y="24" fill="#94a3b8" font-size="11" font-weight="600" letter-spacing="0.6">KR FINANCIAL WAVE</text>
+    <text x="281" y="54" fill="#fbbf24" font-size="26" font-weight="800" font-family="monospace">37 <tspan font-size="13" fill="#fde68a" font-weight="600">Firms (470K Recs)</tspan></text>
+
+    <!-- KPI 3 -->
+    <rect x="526" y="0" width="248" height="72" rx="10" fill="url(#cardBg)" stroke="#38bdf8" stroke-opacity="0.45" stroke-width="1.2"/>
+    <text x="544" y="24" fill="#94a3b8" font-size="11" font-weight="600" letter-spacing="0.6">AI EXPLOIT TOOLING</text>
+    <text x="544" y="52" fill="#38bdf8" font-size="19" font-weight="800" font-family="monospace">ARTEX + LLMs</text>
+    <text x="544" y="65" fill="#7dd3fc" font-size="10">DeepSeek · Claude Code · GLM</text>
+
+    <!-- KPI 4 -->
+    <rect x="789" y="0" width="247" height="72" rx="10" fill="url(#cardBg)" stroke="#10b981" stroke-opacity="0.45" stroke-width="1.2"/>
+    <text x="807" y="24" fill="#94a3b8" font-size="11" font-weight="600" letter-spacing="0.6">OT / COLD-CHAIN SABOTAGE</text>
+    <text x="807" y="54" fill="#34d399" font-size="24" font-weight="800" font-family="monospace">+50°C <tspan font-size="13" fill="#a7f3d0" font-weight="600">11+ EU Nations</tspan></text>
+  </g>
+
+  <!-- Main Timeline / Severity Matrix -->
+  <g transform="translate(32, 210)">
+    <text x="0" y="16" fill="#e2e8f0" font-size="13.5" font-weight="700" letter-spacing="0.5">REVERSE-CHRONOLOGICAL INCIDENT &amp; ADVISORY FEED (NEWEST FIRST)</text>
+    <line x1="0" y1="26" x2="1036" y2="26" stroke="#1e293b" stroke-width="1.5"/>
+
+    <!-- Row 1: Java4Shell & US Outages -->
+    <g transform="translate(0, 38)">
+      <rect x="0" y="0" width="508" height="68" rx="8" fill="url(#cardCrit)" stroke="#ef4444" stroke-opacity="0.5" stroke-width="1"/>
+      <rect x="12" y="12" width="58" height="20" rx="4" fill="#ef4444" fill-opacity="0.2"/>
+      <text x="41" y="26" fill="#fca5a5" font-size="10" font-weight="700" font-family="monospace" text-anchor="middle">NOV 17</text>
+      <rect x="76" y="12" width="68" height="20" rx="4" fill="#dc2626"/>
+      <text x="110" y="26" fill="#ffffff" font-size="10" font-weight="700" font-family="monospace" text-anchor="middle">CVSS 9.2</text>
+      <text x="154" y="26" fill="#f8fafc" font-size="13" font-weight="700">[US/Global] OpenJDK "Java4Shell" &amp; Patch Outages</text>
+      <text x="12" y="46" fill="#94a3b8" font-size="11">CVE-2026-114938 RCE + emergency patching disrupted NSA NSANet &amp; FAA</text>
+      <text x="12" y="61" fill="#38bdf8" font-size="10.5" font-weight="600" font-family="monospace">FIX: Apply Oracle Nov CPU Patch + Staged Rollout Validation</text>
+    </g>
+
+    <!-- Row 1 Right: Kyungil Univ & Synology -->
+    <g transform="translate(528, 38)">
+      <rect x="0" y="0" width="508" height="68" rx="8" fill="url(#cardCrit)" stroke="#ef4444" stroke-opacity="0.5" stroke-width="1"/>
+      <rect x="12" y="12" width="58" height="20" rx="4" fill="#ef4444" fill-opacity="0.2"/>
+      <text x="41" y="26" fill="#fca5a5" font-size="10" font-weight="700" font-family="monospace" text-anchor="middle">NOV 12</text>
+      <rect x="76" y="12" width="68" height="20" rx="4" fill="#dc2626"/>
+      <text x="110" y="26" fill="#ffffff" font-size="10" font-weight="700" font-family="monospace" text-anchor="middle">CVSS 9.8</text>
+      <text x="154" y="26" fill="#f8fafc" font-size="13" font-weight="700">[KR/Global] Kyungil Univ Breach &amp; Synology DSM</text>
+      <text x="12" y="46" fill="#94a3b8" font-size="11">gw.kiu.ac.kr groupware leak + Synology DSM DoS/SQLi (CVE-2026-76954)</text>
+      <text x="12" y="61" fill="#38bdf8" font-size="10.5" font-weight="600" font-family="monospace">FIX: Reset Groupware Creds/VPN · Upgrade DSM 7.4.1 / 7.3.2-5+</text>
+    </g>
+
+    <!-- Row 2 Left: FSI Breach -->
+    <g transform="translate(0, 118)">
+      <rect x="0" y="0" width="508" height="68" rx="8" fill="url(#cardBg)" stroke="#f59e0b" stroke-opacity="0.5" stroke-width="1"/>
+      <rect x="12" y="12" width="58" height="20" rx="4" fill="#f59e0b" fill-opacity="0.2"/>
+      <text x="41" y="26" fill="#fde68a" font-size="10" font-weight="700" font-family="monospace" text-anchor="middle">NOV 09</text>
+      <rect x="76" y="12" width="68" height="20" rx="4" fill="#d97706"/>
+      <text x="110" y="26" fill="#ffffff" font-size="10" font-weight="700" font-family="monospace" text-anchor="middle">HIGH</text>
+      <text x="154" y="26" fill="#f8fafc" font-size="13" font-weight="700">[KR] Financial Security Institute (FSI) Breached</text>
+      <text x="12" y="46" fill="#94a3b8" font-size="11">246 rotating IPs exploited SMS fallback path &amp; FSS impersonation (48 firms)</text>
+      <text x="12" y="61" fill="#38bdf8" font-size="10.5" font-weight="600" font-family="monospace">FIX: Remove Legacy Auth Bypass · Enforce Strict Static IP Allowlists</text>
+    </g>
+
+    <!-- Row 2 Right: Europe 50C Fridge Hack -->
+    <g transform="translate(528, 118)">
+      <rect x="0" y="0" width="508" height="68" rx="8" fill="url(#cardBg)" stroke="#f59e0b" stroke-opacity="0.5" stroke-width="1"/>
+      <rect x="12" y="12" width="58" height="20" rx="4" fill="#f59e0b" fill-opacity="0.2"/>
+      <text x="41" y="26" fill="#fde68a" font-size="10" font-weight="700" font-family="monospace" text-anchor="middle">NOV 03</text>
+      <rect x="76" y="12" width="68" height="20" rx="4" fill="#dc2626"/>
+      <text x="110" y="26" fill="#ffffff" font-size="10" font-weight="700" font-family="monospace" text-anchor="middle">CRITICAL</text>
+      <text x="154" y="26" fill="#f8fafc" font-size="13" font-weight="700">[EU] Cold-Chain OT Sabotage (Freezers Set to 50°C)</text>
+      <text x="12" y="46" fill="#94a3b8" font-size="11">700+ supermarkets &amp; blood plasma units across 11+ European countries</text>
+      <text x="12" y="61" fill="#38bdf8" font-size="10.5" font-weight="600" font-family="monospace">FIX: Isolate OT Controllers Behind VPN · Rotate Default Passwords</text>
+    </g>
+
+    <!-- Row 3 Left: Linux Kernel 9.8 & US Healthcare -->
+    <g transform="translate(0, 198)">
+      <rect x="0" y="0" width="508" height="68" rx="8" fill="url(#cardCrit)" stroke="#ef4444" stroke-opacity="0.5" stroke-width="1"/>
+      <rect x="12" y="12" width="58" height="20" rx="4" fill="#ef4444" fill-opacity="0.2"/>
+      <text x="41" y="26" fill="#fca5a5" font-size="10" font-weight="700" font-family="monospace" text-anchor="middle">OCT 26</text>
+      <rect x="76" y="12" width="68" height="20" rx="4" fill="#dc2626"/>
+      <text x="110" y="26" fill="#ffffff" font-size="10" font-weight="700" font-family="monospace" text-anchor="middle">CVSS 9.8</text>
+      <text x="154" y="26" fill="#f8fafc" font-size="13" font-weight="700">[Global/US] Linux Kernel UAF &amp; UNM Health Attack</text>
+      <text x="12" y="46" fill="#94a3b8" font-size="11">CVE-2026-98432 TCP/IPv4 zero-click root + US Level-1 trauma center outage</text>
+      <text x="12" y="61" fill="#38bdf8" font-size="10.5" font-weight="600" font-family="monospace">FIX: Patch Kernel &amp; MANDATORY REBOOT (uname -r verification)</text>
+    </g>
+
+    <!-- Row 3 Right: PHP2Shell & Korean AI Financial Hack -->
+    <g transform="translate(528, 198)">
+      <rect x="0" y="0" width="508" height="68" rx="8" fill="url(#cardCrit)" stroke="#38bdf8" stroke-opacity="0.5" stroke-width="1"/>
+      <rect x="12" y="12" width="58" height="20" rx="4" fill="#38bdf8" fill-opacity="0.2"/>
+      <text x="41" y="26" fill="#bae6fd" font-size="10" font-weight="700" font-family="monospace" text-anchor="middle">SEP–OCT</text>
+      <rect x="76" y="12" width="68" height="20" rx="4" fill="#0284c7"/>
+      <text x="110" y="26" fill="#ffffff" font-size="10" font-weight="700" font-family="monospace" text-anchor="middle">ORIGIN</text>
+      <text x="154" y="26" fill="#f8fafc" font-size="13" font-weight="700">[KR/Global] PHP2Shell &amp; AI Financial Sector Wave</text>
+      <text x="12" y="46" fill="#94a3b8" font-size="11">PHP 8.2.35+/8.3.36+/8.4.27+/8.5.12+ RCE · ARTEX/DeepSeek/Claude leak · Toss</text>
+      <text x="12" y="61" fill="#38bdf8" font-size="10.5" font-weight="600" font-family="monospace">FIX: Upgrade PHP + Restart FPM · Audit Peripheral Apps &amp; 1-Yr Logs</text>
+    </g>
+  </g>
+
+  <!-- Footer -->
+  <text x="32" y="520" fill="#64748b" font-size="11" font-family="monospace">SOURCE: BOANNEWS · KISA · CISA KEV · CROWDSTRIKE · DAILYSECU</text>
+  <text x="1068" y="520" fill="#64748b" font-size="11" font-family="monospace" text-anchor="end">JAEKUK.COM CYBERSECURITY BRIEFING</text>
+</svg>
