@@ -7,24 +7,6 @@ comments: true
 mermaid: true
 ---
 
-### Quick-Reference Incident & Patch Matrix (Newest First)
-
-| Date | Region | Target / Advisory | Severity / Scale | Actionable Remediation Summary |
-|---|---|---|---|---|
-| **2026-11-18** | 🇰🇷 KR | **Financial Services Commission (FSC) Regulation Reform** | 37 Financial Firms / 470K Records | Mandatory bi-annual vulnerability assessments & full peripheral IT asset inventory |
-| **2026-11-17** | 🇺🇸 US / Global | **OpenJDK `Java4Shell` (`CVE-2026-114938`) & US Patch Outages** | **CVSS 9.2 (Critical)** | Apply Oracle Nov 2026 CPU patches; enforce canary/staged rollouts to prevent network outages |
-| **2026-11-12** | 🇰🇷 KR | **Kyungil University Faculty Groupware (`gw.kiu.ac.kr`) Breach** | ~600 Faculty / 1 GB+ Leaked (`KimJEN`) | Restrict external groupware access via VPN, force password resets, and audit DB/config exports |
-| **2026-11-12** | 🌐 Global / 🇰🇷 KR | **Synology DSM Auth API & SCGI Flaws (DDoS / RCE / Ransomware)** | **CVSS 9.8 (Critical)** | Upgrade to DSM `7.4.1-90080-1+` / `7.3.2-86009-5+`; disable port forwarding (`5000`/`5001`) |
-| **2026-11-09** | 🇰🇷 KR | **Financial Security Institute (FSI / 금융보안원) Breach** | 48 Financial Firms / 650+ Records | Eliminate SMS MFA fallback bypasses, enforce static IP allowlists, and audit regulator accounts |
-| **2026-11-03** | 🇪🇺 EU | **European Cold-Chain OT Sabotage (Freezers Set to +50°C)** | 700+ Supermarkets / 11+ Countries | Air-gap or VPN-gate industrial OT controllers, change default passwords, set thermal alarms |
-| **2026-10-30** | 🌐 Global / 🇰🇷 KR | **Linux Kernel TCP/IPv4 UAF (`CVE-2026-98432`)** | **CVSS 9.8 (Critical)** | Patch kernel (`apt`/`dnf update`) and **perform a mandatory system reboot** (`uname -r`) |
-| **2026-10-26** | 🇺🇸 US | **UNM Health System & Access Dental Ransomware Attacks** | Level-1 Trauma Diverted / 340K+ SSNs | Deploy immutable offline backups, isolate clinical VLANs, and monitor BYOVD EDR tampering |
-| **2026-10-21** | 🌐 Global / 🇺🇸 US | **PHP Core RCE `PHP2Shell` (`CVE-2026-109618` / `109619`)** | **CVSS 9.2 (Critical)** | Upgrade to PHP `8.2.35+`, `8.3.36+`, `8.4.27+`, `8.5.12+` and restart `php-fpm` / web servers |
-| **2026-10-08** | 🇰🇷 KR | **Massive AI-Driven Financial Sector Cyber Attack (`ARTEX`)** | 16→37 Firms (Shinhan, KB, Hana, etc.) | Audit external/peripheral web portals, block IOCs, and defend against autonomous LLM scanners |
-| **2026-10-06** | 🇰🇷 KR | **Toss Bank 1-Year Log Audit & Toss Payments Merchant Key Leak** | 14 Blocked Probes / 2,671 Users | Retain & audit ≥1 year of access logs; rotate merchant PG API keys & require receipt MFA |
-
----
-
 ## Reverse-Chronological Threat & Remediation Log
 
 <details markdown="1">
