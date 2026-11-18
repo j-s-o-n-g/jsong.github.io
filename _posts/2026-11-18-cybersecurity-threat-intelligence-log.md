@@ -7,27 +7,6 @@ comments: true
 mermaid: true
 ---
 
-<img src="/assets/img/cybersecurity-news/threat-intel-banner.jpg" width="900" alt="Global Cybersecurity Threat Intelligence Radar" style="display: block; margin: 0 auto; border-radius: 10px;">
-<p style="font-size: 14px; text-align: center; color: #666;">
-  Global Cybersecurity Threat Intelligence &amp; Incident Remediation Tracker (KR · US · EU)
-</p>
-
-This living threat intelligence briefing tracks major cyber attacks, critical zero-day/N-day vulnerabilities, and actionable defense solutions since the **late-September 2026 AI-driven cyber attack wave against South Korea's financial sector**. 
-
-Curated from major security intelligence platforms—including **BoanNews (보안뉴스)**, **DailySecu (데일리시큐)**, **KISA (KrCERT/CC)**, **US CISA KEV**, and **CrowdStrike Threat Intelligence**—this post focuses primarily on high-impact incidents across **South Korea** and the **United States**, alongside severe physical/OT infrastructure attacks in **Europe**.
-
-> **Live Update Policy:** This intelligence log is refreshed **every 2 days** and sorted in **reverse-chronological order (newest incidents at the top)** so the latest threats and required patches always appear first.
-{: .prompt-info }
-
----
-
-## Executive Threat Radar Dashboard
-
-<img src="/assets/img/cybersecurity-news/threat-radar-dashboard.svg?v=2" width="950" alt="Cybersecurity Threat Intelligence Radar Dashboard" style="display: block; margin: 0 auto; border-radius: 10px;">
-<p style="font-size: 14px; text-align: center; color: #666;">
-  Reverse-Chronological Threat Radar: Key Metrics, CVSS Severity, and Primary Mitigations
-</p>
-
 ### Quick-Reference Incident & Patch Matrix (Newest First)
 
 | Date | Region | Target / Advisory | Severity / Scale | Actionable Remediation Summary |
