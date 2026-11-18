@@ -23,7 +23,7 @@ Curated from major security intelligence platforms—including **BoanNews (보�
 
 ## Executive Threat Radar Dashboard
 
-<img src="/assets/img/cybersecurity-news/threat-radar-dashboard.svg" width="950" alt="Cybersecurity Threat Intelligence Radar Dashboard" style="display: block; margin: 0 auto; border-radius: 10px;">
+<img src="/assets/img/cybersecurity-news/threat-radar-dashboard.svg?v=2" width="950" alt="Cybersecurity Threat Intelligence Radar Dashboard" style="display: block; margin: 0 auto; border-radius: 10px;">
 <p style="font-size: 14px; text-align: center; color: #666;">
   Reverse-Chronological Threat Radar: Key Metrics, CVSS Severity, and Primary Mitigations
 </p>
