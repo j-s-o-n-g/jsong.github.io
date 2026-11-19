@@ -1,6 +1,7 @@
 ---
 title: "Cybersecurity Threat Intelligence Briefing: Major Cyber Attacks & Remediation Log"
 date: 2026-11-18
+last_modified_at: 2026-11-19
 categories: [Security]
 tags: [cybersecurity, threat-intelligence, vulnerability, incident-response, secops]     # TAG names should always be lowercase
 comments: true
@@ -8,6 +9,80 @@ mermaid: true
 ---
 
 ## Reverse-Chronological Threat & Remediation Log
+
+<details markdown="1">
+<summary><strong>[2026-11-19 | 🌐 Global / 🇰🇷 KR / 🇺🇸 US] NGINX2Root: Five Critical RCE Flaws (CVE-2026-123007 et al.) &amp; Kernel Escalation Chain</strong></summary>
+
+* **Threat Overview:** On November 18–19, 2026, F5/NGINX issued an out-of-band security advisory and patches for five critical remote code execution (RCE) vulnerabilities collectively dubbed **`NGINX2Root`** (**CVSS v4.0: 9.2 Critical** / CVSS v3.x: 8.1 High), discovered by Theori's Xint research team (combining manual research with AI-assisted static analysis).
+* **Affected Components &amp; CVEs:** Affecting NGINX Open Source **`1.9.5` through `1.31.8`** and corresponding NGINX Plus releases:
+  * **`CVE-2026-123007`** *(Lead HTTP/2 Flaw)*: Integer underflow and heap-based buffer overflow in `ngx_http_v2_module` flow-control accounting during stream cancellations.
+  * **`CVE-2026-123633` &amp; `CVE-2026-121810`:** Use-After-Free (UAF) flaws triggered during HTTP/2 or HTTP/3 (QUIC) connection draining alongside upstream proxy connections.
+  * **`CVE-2026-123634` &amp; `CVE-2026-113425`:** UAF flaws in the DNS resolver/mirror configuration path and Mail Proxy (`auth_http`) disconnect handling.
+  * **Full Root Chain:** Researchers demonstrated chaining `CVE-2026-123007` with a separate unpatched **Linux kernel SCTP local privilege escalation (LPE)** flaw (affecting kernels `4.15+`) to escalate from the NGINX worker process to `root`.
+* **Solution / Remediation:**
+  1. **Upgrade NGINX Immediately &amp; Restart Binaries:** Update to NGINX Stable **`1.30.7+`** or Mainline **`1.31.9+`** (or vendor-backported packages). Reloading configuration (`nginx -s reload`) alone is **insufficient**; perform a full binary restart/process replacement.
+  2. **Temporary Mitigation:** If immediate binary patching is blocked, remove `http2` from `listen` directives and test/reload (`nginx -t && nginx -s reload`) to mitigate the primary HTTP/2 attack surface.
+  3. **Harden Against Kernel SCTP Chaining:** Unload and blacklist the `sctp` kernel module if unused on web hosts, and monitor Linux distribution advisories for the companion kernel SCTP patch.
+
+</details>
+
+<details markdown="1">
+<summary><strong>[2026-11-18 | 🇺🇸 US] CISA KEV Emergency Wave: REDCap, Apache Axis, Synology DSM, Puppet &amp; LiteLLM Under Active Exploitation</strong></summary>
+
+* **Advisory Overview:** On November 17–18, 2026, US CISA added five actively exploited vulnerabilities to the **Known Exploited Vulnerabilities (KEV)** catalog under **Binding Operational Directive (BOD) 26-04**, imposing aggressive **3-day federal remediation deadlines (November 21, 2026)** and mandatory forensic triage for internet-exposed assets on three critical flaws:
+  * **`CVE-2026-90817` (Vanderbilt University REDCap `13.3.0+`, CVSS 9.8, added Nov 18, due Nov 21):** Unauthenticated code injection / RCE via survey passthrough routing and data import logic.
+  * **`CVE-2026-90436` (Apache Axis 1.x EoL, CVSS 9.8, added Nov 18, due Nov 21):** Unauthenticated RCE via unsafe reflection when deserializing crafted SOAP fault messages.
+  * **`CVE-2024-10441` (Synology DSM &amp; BeeStation OS, CVSS 9.8, added Nov 18, due Nov 21):** Improper output escaping RCE in the system plugin daemon, actively abused in NAS ransomware campaigns.
+  * **`CVE-2026-115731` (Perforce Puppet Enterprise / Core, CVSS 9.4, added Nov 17):** Deserialization of untrusted data in Puppet Server report processing (`PUT` requests using a CA-signed agent cert).
+  * **`CVE-2026-40217` (BerriAI LiteLLM, CVSS 5.9, added Nov 18, due Dec 2):** Sandbox escape RCE in the `/guardrails/test_custom_code` endpoint via Python bytecode manipulation.
+* **Solution / Remediation:**
+  1. **Apply Vendor Patches Immediately:**
+     * **REDCap:** Apply Vanderbilt's latest security hotfixes/releases patching survey parsing and data imports.
+     * **Synology DSM / BSM:** Upgrade to **`7.2.2-72806-1+`**, **`7.2.1-69057-6+`**, **`7.2-64570-4+`**, or **BeeStation OS `1.1-65374+`** (or latest supported DSM 7.3/7.4 builds).
+     * **Perforce Puppet:** Upgrade Puppet Enterprise to **`2026.0.1`**, **`2025.12.1`**, or **`2023.8.13+`** (Puppet Core **`9.1.3`** / **`8.22.2+`**), and enforce **`autosign = false`** to block unauthorized CA certificate issuance.
+     * **BerriAI LiteLLM:** Upgrade to **`v1.83.14-stable`** or later.
+  2. **Decommission EoL Apache Axis 1.x:** Because Apache Axis 1.x is **End-of-Life** with no upstream patch, immediately isolate, disable, or replace legacy SOAP endpoints bundling Axis 1.x.
+  3. **Execute Forensic Triage:** Inspect logs and host artifacts on any internet-exposed instances of the above products for indicators of prior compromise before returning them to production.
+
+</details>
+
+<details markdown="1">
+<summary><strong>[2026-11-18 | 🌐 Global / 🇺🇸 US] Apache Roller Critical Unauthenticated RCE (CVE-2026-129448) Actively Exploited</strong></summary>
+
+* **Threat Overview:** On November 18, 2026, security advisories confirmed active in-the-wild exploitation of **`CVE-2026-129448` (CVSS 9.8 Critical)**, an unauthenticated insecure deserialization vulnerability in **Apache Roller** (affecting versions `4.0.0` through `6.1.4`, with `CVE-2026-82384` covering `6.1.5`).
+* **Root Cause:** The Roller XML-RPC endpoint accepts and deserializes vendor extension types **before** authenticating the requester or checking whether XML-RPC is disabled in the administrative UI.
+* **Solution / Remediation:**
+  1. **Upgrade Apache Roller:** Immediately upgrade to **Apache Roller `6.1.6` or `6.1.7+`**.
+  2. **Server-Side Mitigation (Do Not Rely on Admin UI Toggle):** Turning off XML-RPC in the UI does **not** block exploitation. If immediate upgrade is blocked, set `enabledForExtensions` to `false` in `WEB-INF/web.xml`, remove the `/roller-services/xmlrpc` servlet mapping, and restart the Roller server.
+
+</details>
+
+<details markdown="1">
+<summary><strong>[2026-11-18 | 🇰🇷 KR] Cascading Breaches Hit Korean Universities &amp; Outsourced SaaS Vendors (Jeonju, Yeungnam, Dong-Eui, MetaM &amp; Accesso)</strong></summary>
+
+* **Incident Overview:** Between November 16 and November 18, 2026, BoanNews and DailySecu reported a rapid wave of breaches targeting South Korean university auxiliary portals and third-party outsourced customer systems:
+  * **Jeonju University (`AHA` Online Liberal Arts Platform — reported Nov 18, occurred Nov 16 / detected Nov 17):** External intrusion leaked approximately **180,000 personal records**—including **~25,000 Resident Registration Numbers (RRNs)**—affecting current students, alumni, lifelong-education enrollees, and current/retired staff.
+  * **Yeungnam University (Library e-Book &amp; Career Portals — disclosed Nov 17, occurred Nov 16):** Intrusion exposed student IDs, names, affiliations, and email addresses.
+  * **Dong-Eui University (Research Grant Management System — disclosed Nov 17, occurred Nov 14):** Compromise leaked **530** faculty/staff records (employee ID, name, department, title, birth date).
+  * **Outsourced Vendor Breaches — MetaM &amp; Accesso (disclosed Nov 16–17):** Compromises at contact-center vendor **MetaM (메타엠)** (occurred Nov 12, affecting Mega MGC Coffee, Coinone, and partner workflows) and ticketing provider **Accesso (액세소)** (occurred Nov 14, affecting **LEGOLAND Korea** and **SEA LIFE Busan Aquarium** season-pass holders) exposed customer phone numbers, names, addresses, emails, and pass barcodes.
+* **Solution / Remediation:**
+  1. **Eliminate Unnecessary RRN Storage:** Audit legacy university e-learning and administrative databases to purge retained Resident Registration Numbers (`주민등록번호`) and enforce strong encryption/tokenization.
+  2. **Lock Down Auxiliary &amp; Research Portals:** Isolate university groupware, research grant (`RERP`), and LMS subdomains behind **MFA/2FA** and campus VPN/IP restrictions.
+  3. **Enforce Outsourced Processor Security &amp; SLAs:** Require third-party call-center and ticketing SaaS vendors to implement least-privilege API scoping, WAF protection, and contractual **$\le 24$-hour breach notification SLAs**.
+
+</details>
+
+<details markdown="1">
+<summary><strong>[2026-11-18 | 🇺🇸 US / Global] Software Supply Chain Attacks: Microsoft <code>agent-framework</code> PyPI Compromise &amp; Optimizely Web Injection</strong></summary>
+
+* **Incident Overview:** Two major software supply chain compromises struck cloud developer and enterprise web ecosystems between November 16 and November 18, 2026:
+  * **Microsoft `agent-framework` PyPI Compromise (Nov 17–18):** Attackers hijacked the official `agent-framework` PyPI package and published poisoned versions **`1.26.1` and `1.26.2`**. The packages dropped Python startup hooks (`agent_framework_meta.pth` and `af_runtime_diag.pth`) that executed **automatically on every Python interpreter startup**—even without importing `agent-framework`—to exfiltrate environment variables, Azure/AWS/OpenAI/Hugging Face credentials, and GitHub Actions / Azure DevOps OIDC tokens.
+  * **Optimizely Web Experimentation Supply Chain Attack (Nov 16–17):** Attackers exploited a vulnerability in Optimizely's account-signup workflow to inject malicious JavaScript into CDN-hosted Optimizely snippets across **178 major organizations** (including CNN, BBC, Fox News, Zoom, Salesforce, HSBC, IKEA, and GitLab), serving payment card skimmers, crypto-wallet hijackers, cookie/screenshot stealers, and iOS exploit kits (*Coruna* and *DarkSword*).
+* **Solution / Remediation:**
+  1. **Respond to `agent-framework` `1.26.1` / `1.26.2`:** Treat any workstation, container, or CI/CD runner that installed those versions as **fully compromised**. Immediately rotate all cloud, AI API, PyPI/NPM, GitHub PAT, and OIDC tokens; inspect `site-packages` for `agent_framework_meta.pth`, `agent_framework_meta/`, `af_runtime_diag.pth`, and `af_runtime_diag.py`; wipe/reprovision CI runners; and pin `1.26.0` or verified post-quarantine releases.
+  2. **Harden Against Third-Party Script Injection (Optimizely):** Verify local/CDN caches of Optimizely snippets are purged, enforce strict **Content Security Policy (`script-src`)** rules (eliminating broad wildcards and `unsafe-inline` where feasible), and deploy continuous client-side script integrity monitoring.
+
+</details>
 
 <details markdown="1">
 <summary><strong>[2026-11-18 | 🇰🇷 KR] Financial Authorities Mandate Bi-Annual Vulnerability Assessments After 37-Firm Breach Wave</strong></summary>
@@ -18,6 +93,30 @@ mermaid: true
   1. **Full IT Asset Inventory:** Identify and register 100% of external-facing and third-party peripheral web servers, test endpoints, and partner portals.
   2. **Bi-Annual Vulnerability Audits:** Under the amended *Electronic Financial Supervision Regulations*, financial institutions with assets $\ge 2$ trillion KRW must increase comprehensive vulnerability assessments from once a year to **twice a year (semi-annually)**, explicitly covering non-core peripheral systems.
   3. **Real-Time IOC Sharing:** Automate threat intelligence and attacker IP (IOC) ingestion across sector-wide SIEM/SOAR pipelines within 24 hours.
+
+</details>
+
+<details markdown="1">
+<summary><strong>[2026-11-17 | 🇪🇺 EU] Equinor Internal IT Cyberattack &amp; Wellington IT Irish Credit Union Breach</strong></summary>
+
+* **Incident Overview:** Two major European infrastructure and financial-sector security disclosures surfaced on November 16–17, 2026:
+  * **Equinor Energy Cyberattack (Norway, Nov 17):** State-owned energy giant **Equinor**—one of Europe's largest oil and natural gas suppliers—disclosed an active cyberattack affecting internal IT and corporate administrative/email systems while coordinating with Norway's **National Security Authority (NSM)** (which recently elevated Norway's national cyber threat level to **Level 4/5 High**) and **Havtil**. Equinor confirmed that oil/gas extraction and Operational Technology (OT) systems remained unaffected, with no malware spread or confirmed data exfiltration.
+  * **Wellington IT / Irish Credit Unions (Disclosed Nov 16–17):** Belfast-based banking software supplier **Wellington IT** notified regulators and **40–43 Irish credit unions** that an automated script exploited an infrastructure vulnerability (Oct 2–4) to access saved payee/beneficiary records (names, IBANs, BICs, payment references). While account balances and login credentials were not exposed, Ireland's DPC and Central Bank scrutinized the delayed disclosure and warned of heightened **BEC/impersonation phishing** risks.
+* **Solution / Remediation:**
+  1. **Enforce Strict IT–OT Segmentation:** Maintain hardened firewalls, unidirectional gateways, and separate identity domains between corporate IT/email and energy OT/SCADA production networks.
+  2. **Out-of-Band Beneficiary Verification:** Require out-of-band (voice/app) confirmation for any IBAN/payee changes and deploy member-facing anti-phishing alerts after third-party supplier compromises.
+  3. **Hardware-Backed MFA on Corporate Identity:** Enforce FIDO2/WebAuthn MFA and conditional access policies across corporate email and administrative portals.
+
+</details>
+
+<details markdown="1">
+<summary><strong>[2026-11-17 | 🌐 Global / 🇰🇷 KR] Apache HTTP Server <code>mod_http2</code> RCE (CVE-2026-119618) Active Exploitation Warning</strong></summary>
+
+* **Advisory Overview:** On November 17, 2026, BoanNews and Singapore's Cyber Security Agency (CSA) issued urgent active-exploitation warnings regarding **`CVE-2026-119618` (CVSS v3.1: 9.8 Critical)** following the public release of proof-of-concept (PoC) exploit code.
+* **Technical Impact:** A race condition (`CWE-362`) in the `assign_headers()` function of Apache HTTP Server's **`mod_http2`** module (affecting Apache HTTP Server **`2.4.55` through `2.4.70`** and standalone `mod_h2` `2.0.8`–`2.0.42`) triggers heap memory corruption and unauthenticated remote code execution (RCE) on servers with HTTP/2 (`h2` or `h2c`) enabled.
+* **Solution / Remediation:**
+  1. **Upgrade Apache HTTP Server:** Update immediately to **Apache HTTP Server `2.4.71`** or higher (or apply OS vendor backported `httpd`/`apache2` security packages) and restart the web server daemon.
+  2. **Temporary Mitigation:** If immediate patching is not possible, disable HTTP/2 by removing `h2` and `h2c` from the `Protocols` directive in `httpd.conf` / `apache2.conf` and restarting Apache.
 
 </details>
 
