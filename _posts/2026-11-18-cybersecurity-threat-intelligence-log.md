@@ -1,7 +1,7 @@
 ---
-title: "Cybersecurity Threat Intelligence Briefing: Major Cyber Attacks & Remediation Log"
+title: "우리 회사 보안은 안전한가? - 최근 사이버 공격 팔로우업"
 date: 2026-11-18
-last_modified_at: 2026-11-19
+last_modified_at: 2026-11-20
 categories: [Security]
 tags: [cybersecurity, threat-intelligence, vulnerability, incident-response, secops]     # TAG names should always be lowercase
 comments: true
