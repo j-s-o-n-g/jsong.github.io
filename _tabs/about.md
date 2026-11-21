@@ -164,6 +164,23 @@ html[data-mode="dark"] .rs { --rs-accent: #ff4d86; }
 <tr><td class="rs-lbl">AI Study App · Automation</td><td>Built a custom study app with AI coding tools and scored 88/99 on the ASVAB in 2 weeks / Set up a scheduled task that filters job postings by criteria and reports them by email / Built 4 Tableau dashboards</td></tr>
 </table>
 
+<p class="rs-sec">Certifications</p>
+<table class="rs-tbl rs-certs">
+<tr><td class="rs-date">2026.10</td><td>Red Hat Certified System Administrator</td></tr>
+<tr><td class="rs-date">2026.09</td><td>Cisco Certified Network Associate</td></tr>
+<tr><td class="rs-date">2026.05</td><td>CompTIA Security+ CE</td></tr>
+<tr><td class="rs-date">2025</td><td>AWS Cloud Essentials</td></tr>
+<tr><td class="rs-date">2015.05</td><td>ISO 27001 Lead Auditor (expired)</td></tr>
+</table>
+
+<p class="rs-sec">Awards</p>
+<table class="rs-tbl rs-certs">
+<tr><td class="rs-date">2026.09</td><td>HTB Holmes CTF, top ~2.2% (176th)</td></tr>
+<tr><td class="rs-date">2023</td><td>Veeam Scholarship</td></tr>
+<tr><td class="rs-date">2021–2025</td><td>OSU Dean's List</td></tr>
+<tr><td class="rs-date">2012.07</td><td>ROK Army Brigadier General Commendation (identified a threat during CCTV surveillance)</td></tr>
+</table>
+
 <p class="rs-sec">Technical Skills</p>
 <table class="rs-tbl">
 <tr><td class="rs-lbl">Linux · Server</td><td>RHEL 10 (systemd, LVM, SELinux, firewalld, NFS·autofs, chrony, sudo·ACL), Windows, Active Directory</td></tr>
@@ -171,15 +188,6 @@ html[data-mode="dark"] .rs { --rs-accent: #ff4d86; }
 <tr><td class="rs-lbl">Networking</td><td>TCP/IP, DNS, DHCP, VLAN, 802.1Q, LACP, OSPF, STP, switch and router replacement and monitoring</td></tr>
 <tr><td class="rs-lbl">Security</td><td>Access control and privilege management, server security configuration, log monitoring, DFIR, ISO 27001</td></tr>
 <tr><td class="rs-lbl">Scripting · Docs · Languages</td><td>Bash, Python, PowerShell, SQL, Git, Tableau, SOP·README documentation &nbsp;/&nbsp; Korean (native), English</td></tr>
-</table>
-
-<p class="rs-sec">Certifications &amp; Awards</p>
-<table class="rs-tbl rs-certs">
-<tr><td class="rs-date">2026.10</td><td>Red Hat Certified System Administrator</td><td class="rs-date">2026.09</td><td>HTB Holmes CTF, top ~2.2% (176th)</td></tr>
-<tr><td class="rs-date">2026.09</td><td>Cisco Certified Network Associate</td><td class="rs-date">2023</td><td>Veeam Scholarship</td></tr>
-<tr><td class="rs-date">2026.05</td><td>CompTIA Security+ CE</td><td class="rs-date">2021–2025</td><td>OSU Dean's List</td></tr>
-<tr><td class="rs-date">2025</td><td>AWS Cloud Essentials</td><td class="rs-date">2012.07</td><td>ROK Army Brigadier General Commendation (identified a threat during CCTV surveillance)</td></tr>
-<tr><td class="rs-date">2015.05</td><td>ISO 27001 Lead Auditor (expired)</td><td class="rs-date"></td><td></td></tr>
 </table>
 
 <div class="rs-foot"><b>JAY SONG</b><span>IT Infrastructure · Cloud · Security Engineer</span></div>
