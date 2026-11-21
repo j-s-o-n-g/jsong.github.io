@@ -1,7 +1,7 @@
 ---
 title: "우리 회사 보안은 안전한가? - 최근 사이버 공격 팔로우업"
 date: 2026-11-18
-last_modified_at: 2026-11-20
+last_modified_at: 2026-11-21
 categories: [Security]
 tags: [cybersecurity, threat-intelligence, vulnerability, incident-response, secops]     # TAG names should always be lowercase
 comments: true
@@ -9,6 +9,75 @@ mermaid: true
 ---
 
 ## Reverse-Chronological Threat & Remediation Log
+
+<details markdown="1">
+<summary><strong>[2026-11-20 | 🇰🇷 KR] Kurly Data Breach Exposes 10,701 Records (Including RRNs &amp; Bank Accounts) &amp; Korean SaaS Spillovers</strong></summary>
+
+* **Incident Overview:** Between November 19 and November 21, 2026, BoanNews and DailySecu reported major corporate personal-data breaches and supply-chain spillovers across South Korea:
+  * **Kurly (`컬리`) Internal System Intrusion (Occurred Nov 17 / Reported Nov 18 / Disclosed Nov 20–21):** External attackers used stolen credentials to compromise internal business systems, exposing **10,701 records**—**10,699 "Kurly Curator"** affiliate marketing participants and **2** regular customer member IDs. While regular customer passwords, payment methods, and home addresses were unaffected, leaked Curator data included names, IDs, phone numbers, email addresses, SNS handles, and—for a subset of participants—**Resident Registration Numbers (RRNs / `주민등록번호`) and bank account numbers**. Kurly CEO Kim Seul-ah issued an apology and announced 50,000–150,000 KRW compensation plus full reimbursement for verified secondary financial harm.
+  * **Voiceloop `JAMAKE` &amp; Douzone Bizon (`더존비즈온`) Spillovers (Reported Nov 19–20):** BoanNews also highlighted an unauthorized admin-panel intrusion at AI captioning/translation platform **JAMAKE (`자메이크`)** affecting **53,199 accounts** (with attacker permissions reaching ~9,000 linked YouTube channels before tokens were rotated), alongside expanded secondary disclosures from the **Douzone Bizon** (`Smart A 10` / `APO` backup) supply-chain compromise affecting **Korea Electronic Certification (`한국전자인증`)** and additional client organizations.
+* **Solution / Remediation:**
+  1. **Enforce Phishing-Resistant MFA &amp; Credential Hygiene on Internal Ops Portals:** Require hardware FIDO2/WebAuthn MFA for all internal back-office, affiliate/partner management, and VPN accounts, and rotate any static API/OAuth integration keys immediately upon anomaly detection.
+  2. **Restrict &amp; Tokenize Settlement PII (RRNs &amp; Bank Accounts):** Segregate creator/affiliate tax and payout information (RRNs, bank accounts) into an isolated, encrypted payout vault rather than general marketing or operational CRM databases.
+  3. **Lock Admin Consoles to Private Networks:** Restrict administrative interfaces (such as SaaS management panels and ERP/backup portals) exclusively to corporate VPN/zero-trust IP allowlists and enforce mandatory IP-anomaly session revocation.
+
+</details>
+
+<details markdown="1">
+<summary><strong>[2026-11-20 | 🇺🇸 US / 🇰🇷 KR / 🌐 Global] VMware vCenter Zero-Day (CVE-2026-123890) &amp; CISA KEV Nov 20 Emergency Wave (Cisco Expressway, SAP NetWeaver)</strong></summary>
+
+* **Advisory Overview:** On November 20, 2026, both **US CISA** (updating the KEV catalog with an aggressive **November 23, 2026** federal deadline and mandatory forensic triage) and **KISA (KrCERT/CC)** issued emergency warnings for actively exploited enterprise infrastructure flaws:
+  * **`CVE-2026-123890` (VMware vCenter Server, CVSS 9.8 Critical — VMSA-2026-0009):** An unauthenticated authentication bypass in the VMware Directory Service (`vmdird`) caused by Secure Remote Password (SRP-6a) session key disclosure over DCE/RPC, granting full `administrator@vsphere.local` control. Google Threat Intelligence Group and Mandiant confirmed active **zero-day exploitation since early September 2026** by China-nexus espionage group **Armory Castle (UNC5221)** using a custom Golang tool (**`BONESAW`**) to steal `data.mdb` and create rogue SSO admins.
+  * **`CVE-2026-76466` (Cisco Expressway Series, CVSS 9.8 Critical):** Use of hard-coded credentials, persistent cookies, and insufficient client-certificate validation over RPC in the database service, allowing unauthenticated remote `root` code execution.
+  * **`CVE-2025-42884` (SAP NetWeaver Enterprise Portal):** Improper query-logic neutralization / JNDI injection allowing unauthenticated remote actors to manipulate JNDI lookups and access unauthorized data. *(CISA also formally added `CVE-2026-129448` Apache Roller to the Nov 20 KEV batch.)*
+* **Solution / Remediation:**
+  1. **Apply Vendor Patches Immediately (No Workarounds Available):**
+     * **VMware vCenter:** Upgrade to **`9.1.1.0200+`**, **`9.0.2.0200+`**, or **`8.0 U3m+`** (plus companion Cloud Foundation / SDDC Manager / VMware Tools updates per VMSA-2026-0009). **No functional workarounds exist.**
+     * **Cisco Expressway-C / E:** Upgrade to Cisco's fixed software releases (**`X15.5.20` / `15SU5+`**) and verify TLS Verify Mode clustering hardening. **No workarounds exist.**
+     * **SAP NetWeaver:** Apply **SAP Security Notes `3660969` / `3642398`** via Software Update Manager (SUM).
+  2. **Execute Mandatory vCenter Zero-Day Compromise Triage:** Because `CVE-2026-123890` was exploited for over two months pre-patch, audit vCenter for unexpected local/SSO admins (e.g., `sps-` prefixes), transient VAMI SSH toggles (`/rest/appliance/access/ssh`), unauthorized access to ports `2012`/`5480`, and rogue ESXi root SSH keys; rotate all SSO/service credentials and replace **vCenter SAML signing certificates**.
+
+</details>
+
+<details markdown="1">
+<summary><strong>[2026-11-20 | 🇺🇸 US / 🌐 Global] Third-Party Vendor Breaches Hit JPMorgan Chase, Visa &amp; Mastercard (n0n Extortion Group)</strong></summary>
+
+* **Incident Overview:** On November 19–20, 2026, **JPMorgan Chase, Visa, and Mastercard** confirmed customer-data exposures after extortion/ransomware group **`n0n`** (active since September 2026) published stolen vendor datasets on its dark-web leak site following a 48-hour ransom deadline.
+* **Scope &amp; Confirmed Impact:** All three firms confirmed their **core internal banking and payment-processing networks were untouched**, with no credit card numbers, login credentials, or customer funds compromised. Instead, the leaks stemmed from **third-party service providers and subcontractors**:
+  * **JPMorgan Chase:** Attackers accessed outside marketing-vendor records containing ~**16,000 email addresses** (some tied to high-net-worth/invitation-only Reserve card programs), names, and phone numbers. *(JPMorgan explicitly confirmed this breach was unrelated to an earlier-week technical transaction glitch.)*
+  * **Visa:** Confirmed an incident involving a third-party service provider in the Asia-Pacific region, with core payment data unaffected.
+  * **Mastercard:** Confirmed exposure of a limited number of email addresses and non-payment data from a small subset of cardholders in a specific card-benefit/loyalty program.
+* **Solution / Remediation:**
+  1. **Enforce Data Minimization With Marketing &amp; Loyalty Vendors:** Purge non-essential customer PII (and high-net-worth tier tags) from external marketing/benefit contractors; transmit only tokenized customer identifiers where possible.
+  2. **Targeted Anti-Phishing &amp; VIP Account Protection:** Issue proactive spear-phishing/vishing advisories to exposed cardholders (especially high-net-worth segments) and enforce out-of-band verification for account-tier or contact-detail changes.
+  3. **Continuous Third-Party Attack Surface Monitoring:** Audit sub-processors for exposed file-transfer, S3, and remote-access endpoints and enforce mandatory 24-hour vendor breach telemetry sharing.
+
+</details>
+
+<details markdown="1">
+<summary><strong>[2026-11-20 | 🇪🇺 EU / 🇬🇧 UK] European Commission Confirms ARTEX AI-Driven Cyberattack &amp; UK NCSC Thwarts Cold-Chain OT Sabotage</strong></summary>
+
+* **Incident Overview:** On November 19–20, 2026, two major European institutional and critical-infrastructure security disclosures emerged:
+  * **European Commission AI-Assisted Cyberattack (Confirmed Nov 19):** Following investigative reporting, the European Commission confirmed it suffered a targeted cyber campaign (initially detected October 22) powered by the open-source autonomous AI pentesting framework **`ARTEX`**. To contain the intrusion, the Commission took core internal administrative platforms offline for over a week—including HR/payroll portal **Sysper**, medical reimbursement system **MyPMO**, and internal translation services—prompting CERT-EU warnings and Corporate Management Board crisis briefings while investigators assess potential staff PII exposure.
+  * **UK NCSC Covert Cold-Chain OT Defense Operation (Revealed Nov 20):** Following the continental European supermarket refrigeration sabotage wave, UK disclosures revealed that the **National Cyber Security Centre (NCSC)**, Defra, FSA, and retail operators ran an urgent covert operation after researchers discovered critical authentication flaws in **Resource Data Management (RDM)** refrigeration controllers widely used across UK supermarkets, warehouses, and stadiums. Teams worked through weekends to pull thousands of RDM controllers off the public internet, place them behind VPNs (or disconnect them manually), and deploy firmware patches—successfully preventing supply-chain spoilage.
+* **Solution / Remediation:**
+  1. **Inventory &amp; Air-Gap Commercial OT/Telemetry Controllers:** Immediately scan external IP space (Shodan/Censys) for exposed refrigeration, HVAC, and building-management controllers (e.g., RDM, Danfoss, Coolworld); place all units behind authenticated VPNs or private cellular APNs and apply vendor firmware updates.
+  2. **Deploy AI-Speed Behavioral Edge Defenses:** Because autonomous frameworks like `ARTEX` chain rapid discovery and exploitation within hours, enforce strict WAF rate limiting, automated scanner-behavior blocking, and zero-trust authentication on all internal HR/administrative portals.
+  3. **Maintain Manual OT Fallback Procedures:** Establish manual temperature-monitoring and physical override SOPs for critical food and medical cold-chain facilities in case telemetry networks must be severed during an emergency.
+
+</details>
+
+<details markdown="1">
+<summary><strong>[2026-11-19 | 🌐 Global / 🇰🇷 KR] PHP Critical Security Wave (CVE-2026-129289 / phpAfterShell) &amp; F5 BIG-IP Data-Plane RCE (CVE-2026-121805)</strong></summary>
+
+* **Advisory Overview:** On November 19–20, 2026, **KISA (KrCERT/CC)**, the PHP Group, and F5 issued urgent security updates for critical web-stack and network-appliance vulnerabilities:
+  * **PHP Security Releases (`8.2.36`, `8.3.37`, `8.4.28`, `8.5.13` — Nov 19):** Addressed 17–18 vulnerabilities, including multiple **CVSS 9.2 Critical** flaws: **`CVE-2026-129289`** (PHP-FPM FastCGI request smuggling leading to unauthenticated RCE when `fastcgi_keep_conn on` or `mod_proxy_fcgi` connection reuse is enabled and `php://input` is partially unread), **`CVE-2026-126714`** (*`phpAfterShell`* session file overwrite to arbitrary deserialization RCE), **`CVE-2026-115560`** (session serializer mismatch RCE), plus Use-After-Free RCEs **`CVE-2026-129496`**, **`CVE-2026-129481`**, **`CVE-2026-129474`**, and PHP-FPM LPE **`CVE-2026-129291`**.
+  * **F5 BIG-IP Data-Plane Buffer Overflows (Nov 19–20):** F5 patched five critical stack-based buffer overflow flaws in BIG-IP APM and iRules—led by **`CVE-2026-121805`** in the iRules `PEM::subscriber` command—enabling unauthenticated remote attackers to crash the Traffic Management Microkernel (TMM) for DoS or achieve RCE. Because this is a **data-plane** vulnerability, management-interface ACLs do not mitigate it.
+* **Solution / Remediation:**
+  1. **Upgrade PHP &amp; Rebuild Containers:** Update immediately to **PHP `8.2.36`, `8.3.37`, `8.4.28`, or `8.5.13+`** (or vendor-backported OS packages), **restart `php-fpm` and Nginx/Apache workers**, and rebuild/redeploy Docker base images. Audit web-server configs to disable unnecessary FastCGI persistent connection reuse (`fastcgi_keep_conn`) and avoid runtime `ini_set()` session serializer changes.
+  2. **Apply F5 MyF5 Engineering Hotfixes:** Audit virtual servers for iRules using `PEM::subscriber` and apply the fixed engineering hotfixes (**`BIGIP-21.1.0.4.0.19.3-ENG+`**, **`17.5.1.11.0.61.12-ENG+`**, **`17.1.3.7.0.21.4-ENG+`**, or BIG-IP Next **`BNK-2.4.2-EHF1+`**, **`2.3.4-EHF1+`**, **`2.2.5-EHF1+`**).
+
+</details>
 
 <details markdown="1">
 <summary><strong>[2026-11-19 | 🌐 Global / 🇰🇷 KR / 🇺🇸 US] NGINX2Root: Five Critical RCE Flaws (CVE-2026-123007 et al.) &amp; Kernel Escalation Chain</strong></summary>
