@@ -66,3 +66,29 @@ Serving in an IT Helpdesk and technical field support role was demanding, yet it
 
 From resolving user issues over the helpdesk line to hauling heavy aluminum workstation towers and managing field communications gear, that experience gave me a durable, hands-on respect for the physical and operational realities of IT infrastructure.
 
+## Recognition & Awards
+Through consistent effort, leadership, a positive attitude, and a strong service mindset, I received five commendations at the division commander level.
+
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 1rem;">
+  <figure style="margin: 0;">
+    <img src="/assets/img/awards/apprehension-of-an-offender.jpg" alt="Commendation for apprehending an offender" loading="lazy" style="display: block; width: 100%; height: auto;">
+    <figcaption style="font-size: 14px; text-align: center; color: #666;">Apprehension of an Offender</figcaption>
+  </figure>
+  <figure style="margin: 0;">
+    <img src="/assets/img/awards/exemplary-military-conduct.jpg" alt="Award for exemplary military conduct" loading="lazy" style="display: block; width: 100%; height: auto;">
+    <figcaption style="font-size: 14px; text-align: center; color: #666;">Exemplary Military Conduct</figcaption>
+  </figure>
+  <figure style="margin: 0;">
+    <img src="/assets/img/awards/identified-risk-during-monitoring-duty.jpg" alt="Commendation for identifying a risk during monitoring duty" loading="lazy" style="display: block; width: 100%; height: auto;">
+    <figcaption style="font-size: 14px; text-align: center; color: #666;">Identified Risk During Monitoring Duty</figcaption>
+  </figure>
+  <figure style="margin: 0;">
+    <img src="/assets/img/awards/it-security-awareness-contest.jpg" alt="Award for an IT security awareness contest entry" loading="lazy" style="display: block; width: 100%; height: auto;">
+    <figcaption style="font-size: 14px; text-align: center; color: #666;">IT Security Awareness Contest</figcaption>
+  </figure>
+  <figure style="margin: 0;">
+    <img src="/assets/img/awards/kfn-video-promotion-contest.jpg" alt="Award for a KFN video promotion contest entry" loading="lazy" style="display: block; width: 100%; height: auto;">
+    <figcaption style="font-size: 14px; text-align: center; color: #666;">KFN Video Promotion Contest</figcaption>
+  </figure>
+</div>
+
