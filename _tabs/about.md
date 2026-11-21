@@ -176,9 +176,13 @@ html[data-mode="dark"] .rs { --rs-accent: #ff4d86; }
 <p class="rs-sec">Awards</p>
 <table class="rs-tbl rs-certs">
 <tr><td class="rs-date">2026.09</td><td>HTB Holmes CTF, top ~2.2% (176th)</td></tr>
-<tr><td class="rs-date">2023</td><td>Veeam Scholarship</td></tr>
+<tr><td class="rs-date">2021–2025</td><td>Veeam Scholarship</td></tr>
 <tr><td class="rs-date">2021–2025</td><td>OSU Dean's List</td></tr>
 <tr><td class="rs-date">2012.07</td><td>ROK Army Brigadier General Commendation (identified a threat during CCTV surveillance)</td></tr>
+<tr><td class="rs-date">—</td><td>Best Poster Award, IT Awareness Campaign</td></tr>
+<tr><td class="rs-date">—</td><td>Award, KFN Video Contest</td></tr>
+<tr><td class="rs-date">—</td><td>Commendation for Apprehending a Sexual Assailant While on Leave</td></tr>
+<tr><td class="rs-date">—</td><td>Award for Outstanding Conduct During Driver Training</td></tr>
 </table>
 
 <p class="rs-sec">Technical Skills</p>
