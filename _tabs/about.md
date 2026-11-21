@@ -120,37 +120,6 @@ html[data-mode="dark"] .rs { --rs-accent: #ff4d86; }
 </div>
 
 <div class="rs-job">
-<div class="rs-job-head"><span class="rs-org">SK Siltron</span><span class="rs-period">2018.04 – 2018.07</span></div>
-<p class="rs-role">Semiconductor Wafer Process Associate</p>
-</div>
-
-<div class="rs-job">
-<div class="rs-job-head"><span class="rs-org">Pacific Meat</span><span class="rs-period">2017.01 – 2017.10</span></div>
-<p class="rs-role">Meat Processing &amp; Packing Associate</p>
-<table class="rs-tbl">
-<tr><td class="rs-lbl">Responsibilities</td><td><ul>
-<li>Processed and packed meat products</li>
-<li>Loaded and unloaded goods at the dock</li>
-</ul></td></tr>
-</table>
-</div>
-
-<div class="rs-job">
-<div class="rs-job-head"><span class="rs-org">Mari Jjang Gimbap</span><span class="rs-period">2015 – 2016.09</span></div>
-<p class="rs-role">Food Preparation &amp; Sales Assistant</p>
-<table class="rs-tbl">
-<tr><td class="rs-lbl">Responsibilities</td><td><ul>
-<li>Prepared gimbap and assisted with sales</li>
-</ul></td></tr>
-</table>
-</div>
-
-<div class="rs-job">
-<div class="rs-job-head"><span class="rs-org">Soonchunhyang University Hospital</span><span class="rs-period">2015.09 – 2015.11</span></div>
-<p class="rs-role">Vascular Center Staff</p>
-</div>
-
-<div class="rs-job">
 <div class="rs-job-head"><span class="rs-org">Wedding Photography</span><span class="rs-period">2013.10 – 2016</span></div>
 <p class="rs-role">Wedding Photographer</p>
 <table class="rs-tbl">
