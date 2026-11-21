@@ -6,20 +6,7 @@ tags: [linux, homelab, vmware]     # TAG names should always be lowercase
 comments: true
 ---
 
-I set up this dual-node virtualization lab to practice hands-on Red Hat Enterprise Linux (RHEL 9) system administration in a realistic environment. To simulate real-world scenarios and RHCSA exam practice, I integrated a local simulation harness containing 25 practical tasks.
-
----
-
-## Lab Environment
-
-* **Hypervisor**: VMware Fusion running on macOS.
-* **Nodes**: Two RHEL 9 virtual machines (`node1` and `node2`).
-* **Network Interfaces on node1**:
-  * `enp2s0`: Primary management network interface.
-  * `rhcsa0`: Dedicated interface for practicing static network assignments.
-* **Simulation Harness**: Local practice suite with a web interface at `http://localhost:8200` and automated CLI grading tools.
-
----
+To strengthen my Linux troubleshooting skills, I built a two-node RHEL 10 lab in VMware Fusion and captured clean baseline snapshots immediately after the initial setup. This evolving project documents how I define realistic operational scenarios, diagnose each issue, implement and validate solutions, and apply what I learn as the lab grows.
 
 <details markdown="1">
 <summary><strong>Task 1: Configure networking and set hostname</strong></summary>
