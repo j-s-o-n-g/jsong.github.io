@@ -15,7 +15,7 @@ html[data-mode="dark"] .rs { --rs-accent: #ff4d86; }
 .rs .rs-name { font-size: 2.6rem; font-weight: 500; line-height: 1.1; margin: 0 0 0.9rem; color: var(--rs-strong); border: 0; padding: 0; }
 .rs .rs-headline { font-size: 1.1rem; font-weight: 700; color: var(--rs-strong); margin: 0 0 0.4rem; }
 .rs .rs-sub { color: var(--rs-muted); font-size: 0.85rem; margin: 0 0 0.9rem; }
-.rs .rs-photo { flex: 0 0 auto; width: 120px; height: 160px; object-fit: cover; border: 1px solid var(--rs-line); }
+.rs .rs-photo { flex: 0 0 auto; width: 120px; height: 160px; object-fit: cover; border: 1px solid var(--rs-line); pointer-events: none; cursor: default; }
 .rs .rs-info { display: grid; grid-template-columns: max-content 1fr max-content 1fr; gap: 0.35rem 1.2rem; font-size: 0.88rem; }
 .rs .rs-info b { color: var(--rs-strong); }
 .rs .rs-sec { display: flex; align-items: center; gap: 0.5rem; font-size: 1.2rem; font-weight: 700; color: var(--rs-strong); margin: 2.2rem 0 0.7rem; padding: 0; border: 0; }
