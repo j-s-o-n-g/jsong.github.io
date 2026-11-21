@@ -8,8 +8,6 @@ comments: true
 mermaid: true
 ---
 
-## Reverse-Chronological Threat & Remediation Log
-
 <details markdown="1">
 <summary><strong>[2026-11-20 | 🇰🇷 KR] Kurly Data Breach Exposes 10,701 Records (Including RRNs &amp; Bank Accounts) &amp; Korean SaaS Spillovers</strong></summary>
 
