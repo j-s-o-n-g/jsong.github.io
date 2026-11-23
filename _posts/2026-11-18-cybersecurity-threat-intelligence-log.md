@@ -1,12 +1,81 @@
 ---
 title: "우리 회사 보안은 안전한가? - 최근 사이버 공격 팔로우업"
 date: 2026-11-18
-last_modified_at: 2026-11-21
+last_modified_at: 2026-11-23
 categories: [Security]
 tags: [cybersecurity, threat-intelligence, vulnerability, incident-response, secops]     # TAG names should always be lowercase
 comments: true
 mermaid: true
 ---
+
+<details markdown="1">
+<summary><strong>[2026-11-22 | 🇰🇷 KR] KEPCO Massive Data Breach Exposes 1.52 Million Records (RRNs, Bank Accounts &amp; Card Numbers) Across <code>한전ON</code> &amp; Procurement Portal</strong></summary>
+
+* **Incident Overview:** On November 22, 2026, state-run utility giant **Korea Electric Power Corporation (KEPCO / `한국전력공사`)** officially confirmed a massive personal and corporate data breach across two core digital platforms—occurring just one month after an earlier October breach exposed ~35,000 employee and partner records:
+  * **Timeline &amp; Detection:** Following dark-web leak claims surfaced on November 19, KEPCO confirmed the intrusion on November 20 while investigating access latency on `한전ON`, and issued a public apology under CEO Kim Dong-chul on November 22.
+  * **`한전ON` Integrated Customer Portal (650,487 Records):** Compromised 12 sensitive personal and financial fields, including customer numbers, names, **Resident/Alien Registration Numbers (`주민등록번호` / `외국인등록번호`)**, phone numbers, addresses, bank names, **bank account numbers**, account holder names, card issuers, **credit/debit card numbers**, cardholder names, and billing details.
+  * **Electronic Procurement System (`전자조달시스템 / SRM` — 869,761 Records):** Exposed ~420,000 corporate representative records (names, RRNs/alien numbers, emails, company addresses) and ~440,000 KEPCO/contractor employee profiles (names, affiliations, employee IDs, mobile/office phone numbers, emails), alongside dark-web postings claiming vendor registration, bid pricing, sole-source contracts, and government/military facility procurement data—bringing the combined tally to **1,520,248 records**.
+  * **Emergency Response:** KEPCO blocked external attacker IPs, temporarily suspended affected public-facing services, convened an emergency response task force, and launched a joint investigation with the National Intelligence Service (NIS), the Ministry of Climate, Energy and Environment Cyber Safety Center, PIPC, and police.
+* **Solution / Remediation:**
+  1. **Eliminate Plaintext Financial &amp; RRN Storage in Web Portals:** Decouple Resident Registration Numbers (`주민등록번호`), bank accounts, and card numbers from customer-facing and procurement databases; replace direct storage with PCI-DSS tokenized payment vaults and encrypted identity isolation.
+  2. **Audit Simplified Auth (`간편인증`) &amp; Open Service APIs:** Conduct immediate penetration tests and code audits on open digital service endpoints for Broken Object-Level Authorization (BOLA/IDOR), session hijacking, and automated AI-assisted scraping; enforce strict WAF rate limiting and step-up MFA for sensitive record queries.
+  3. **Activate Financial FDS &amp; Targeted Fraud Alerts:** Coordinate with domestic banks and card issuers to flag exposed accounts/cards under enhanced Fraud Detection System (FDS) monitoring and warn customers and procurement partners against targeted voice-phishing (`보이스피싱`) and contract-impersonation scams.
+
+</details>
+
+<details markdown="1">
+<summary><strong>[2026-11-22 | 🇰🇷 KR] POSTECH Breach Expands to 45,529 Records &amp; Black Diamond Korea Discloses Outsourced ERP Supply-Chain Exposure</strong></summary>
+
+* **Incident Overview:** Between November 21 and November 22, 2026, BoanNews and DailySecu reported expanded university breach findings and a retail supply-chain compromise in South Korea:
+  * **POSTECH (`포항공과대학교`) Systems Intrusion (Expanded Tally Reported Nov 22):** Initially triggered by a November 13 report of unauthorized cryptocurrency mining malware installed on a laboratory GPU server, POSTECH's second official disclosure confirmed that attackers exploited a system vulnerability (Nov 13, 00:30–03:30 KST) to gain administrator privileges and exfiltrate **45,529 records** across three portals: Research Equipment Support Portal (**RETINA**: 19,500 integrated IDs and encrypted passwords), IT Service Portal (**HEMOS**: 478 IDs, emails, affiliations), and the newly confirmed University Integrated Portal (**Podium**: 25,551 names, emails, departments, job titles, and office extensions). RRNs and passport numbers were unaffected, and mandatory campus-wide password resets took effect on November 18.
+  * **Black Diamond Korea (`블랙다이아몬드 코리아`) Outsourced ERP Breach (Disclosed Nov 20–22):** After receiving notice from its external integrated ERP service provider on November 19 regarding abnormal third-party server access, Black Diamond Korea warned member and non-member online shoppers of potential exposure of names, mobile phone numbers, delivery addresses, and order histories. Storefront login passwords, card numbers, and bank accounts were stored separately and unaffected; the company immediately severed ERP integration.
+* **Solution / Remediation:**
+  1. **Isolate Research GPU Clusters From Identity Portals:** Segment high-compute lab GPU servers on dedicated VLANs without lateral trust to university SSO/portal databases, deploy EDR to alert on rogue cryptominer processes, and enforce MFA on all portal admin accounts.
+  2. **Minimize Persistent PII in Outsourced Logistics/ERP SaaS:** Restrict third-party order-fulfillment ERPs to ephemeral, encrypted shipping tokens with automated post-delivery data purging, and lock ERP sync APIs behind mutual TLS and IP allowlists.
+  3. **Deploy Anti-Smishing Customer Advisories:** Proactively alert affected e-commerce customers to ignore delivery-impersonation SMS/smishing links following any external logistics or ERP breach.
+
+</details>
+
+<details markdown="1">
+<summary><strong>[2026-11-22 | 🌐 Global / 🇺🇸 US] GL.iNet GoodCloud Router/KVM Compromise, GPGME Double-Free (<code>CVE-2026-129975</code>) &amp; AI ZDR Prompt Exposure</strong></summary>
+
+* **Threat &amp; Advisory Overview:** Between November 20 and November 22, 2026, critical infrastructure, open-source cryptography, and AI inference supply-chain incidents surfaced across BleepingComputer and The Hacker News:
+  * **GL.iNet GoodCloud Remote Management Compromise (Nov 20–22):** GL.iNet confirmed attackers exploited a vulnerability in its **GoodCloud** cloud remote management platform to push persistent root backdoors and reverse shells (`ni.sh`, processes disguised as `crond -i /tmp/.log`) onto routers and **KVM-over-IP** devices, exhibiting botnet behavior and creating potential lateral-access paths into connected downstream hosts. GL.iNet patched the cloud flaw and scheduled firmware updates starting November 22, warning that **cloud remediation does not disinfect already-compromised devices**.
+  * **GnuPG / GPGME Critical Double-Free (`CVE-2026-129975`, Disclosed Nov 20 / Reported Nov 21–22):** A double-free memory corruption bug in GPGME's `read_status()` and `read_colon_line()` routines—triggered by a crafted OpenPGP key with an abnormally long user ID—risks sensitive memory exfiltration or RCE across mail clients, Flatpak, Samba, and Gpg4win (`GPGME &lt; 2.3.1`).
+  * **AI Zero Data Retention (ZDR) Leak Audit &amp; OpenRouter Enforcement (Nov 22):** Following a 5-month Dragos canary-token study (2 million prompts, July–Nov 2026) demonstrating that compromised AI inference providers and marketplace resellers logged or scraped prompts marked **Zero Data Retention (ZDR)**, **OpenRouter** off-boarded three providers and stripped **125 endpoints** from ZDR eligibility on November 22 (noting OpenRouter's own platform was unbreached).
+* **Solution / Remediation:**
+  1. **Audit &amp; Factory-Reset GL.iNet Routers/KVMs:** Inspect devices for anomalous `crond -i /tmp/.log` processes or `ni.sh` scripts. If compromised, **do not restore from potentially tainted backups**—perform a clean factory reset, flash the November 22+ security firmware, rotate all VPN/SSH credentials, and audit downstream servers attached to KVM-over-IP units.
+  2. **Upgrade GPGME to `2.3.1+`:** Apply OS security updates (e.g., Debian `DSA-6646-1`, updated Gpg4win/GnuPG Desktop) or recompile statically linked applications against **GPGME `2.3.1`** or later.
+  3. **Sanitize Prompts Regardless of ZDR Claims:** Strip API keys, credentials, proprietary code, and regulated PII before calling third-party inference endpoints, and route sensitive workloads through audited private VPC or self-hosted models.
+
+</details>
+
+<details markdown="1">
+<summary><strong>[2026-11-21 | 🇺🇸 US] Suspected Cyberattacks Hit FBI's National Crime Information Center (<code>NCIC</code>) &amp; USDA Farm Payment Systems</strong></summary>
+
+* **Incident Overview:** On November 20–21, 2026, major U.S. media outlets (CNN, AP, Nextgov/FCW, The Guardian) and BleepingComputer reported cyber intrusions targeting two critical U.S. federal infrastructure systems:
+  * **FBI National Crime Information Center (`NCIC`) Intrusion Investigation (Reported Nov 20–21):** The FBI launched a formal forensic probe into a suspected cyberattack and apparent breach of the **NCIC** database—the nationwide clearinghouse relied upon by federal, state, and local law enforcement for active arrest warrants, fugitives, missing persons, protection orders, stolen firearms/vehicles, and criminal histories. President Donald Trump confirmed he had been briefed on the incident. Security specialists warned that beyond data theft, **potential integrity tampering** with warrant or criminal-history records poses severe operational and officer-safety risks. *(This follows an earlier autumn breach of the FBI's `FBIJobs.gov` recruitment portal.)*
+  * **U.S. Department of Agriculture (`USDA`) Farm Payment Systems Attack (Reported Nov 21):** Internal USDA communications revealed that its Cybersecurity and Privacy Operations Center uncovered a cyberattack against systems processing farmer payments, loans, and subsidies (including Farm Service Agency applications), forcing applications and VPNs offline and triggering enterprise-wide database password resets since November 16.
+* **Solution / Remediation:**
+  1. **Enforce Cryptographic Integrity &amp; Immutable Audit Logs:** Protect justice, warrant, and federal disbursement databases with cryptographic row signing, append-only WORM audit trails, and real-time anomaly alerts on bulk queries or record modifications.
+  2. **Harden Privileged Access &amp; Segregate Identity Trusts:** Require hardware-backed FIDO2 MFA, Privileged Access Management (PAM), and just-in-time session recording for all database and clearinghouse administrators; isolate payment environments from research or law-enforcement enclaves.
+  3. **Execute Enterprise-Wide Credential &amp; Token Rotation:** Immediately rotate database service credentials, VPN certificates, and API secrets across impacted federal and contractor environments while conducting forensic log triage.
+
+</details>
+
+<details markdown="1">
+<summary><strong>[2026-11-21 | 🇺🇸 US / 🌐 Global] Microsoft Entra Connect Health API Breach, Rackspace Spot Kubernetes Compromise &amp; Bell Canada Intrusion</strong></summary>
+
+* **Incident Overview:** Between November 20 and November 21, 2026, BleepingComputer reported three notable cloud, identity, and telecom security incidents impacting North American and global enterprise customers:
+  * **Microsoft Entra Connect Health API Exploitation (Notified Nov 20–21):** Microsoft alerted impacted organizations via Azure Service Health that threat actors actively exploited an API vulnerability (introduced July 23, 2026; detected November 9; patched server-side November 19) to gain unauthorized read-only access to tenant metadata—including **global administrator and technical contact email addresses**, tenant IDs, display/initial domain names, license tiers, directory sync status/timestamps, and an expired legacy certificate from an internal service decommissioned in late 2024. Passwords, tokens, and on-premises AD structures were unaffected.
+  * **Rackspace Spot Cloud Platform Breach (Reported Nov 21):** Attackers leveraged leaked credentials to access **Rackspace Spot** managed Kubernetes environments on November 17 (~22 hours of access, discovered November 18; console restored by November 21), deploying unauthorized pods, enumerating nodes/volumes, and reading **Kubernetes Secrets** (database passwords, API keys, auth tokens) as well as Spot API and refresh tokens.
+  * **Bell Canada Enterprise Provisioning Intrusion (Reported Nov 20):** Bell Canada confirmed an "agentic" threat actor breached a pre-production environment of its **Maximo** circuit-provisioning system on November 17, stealing enterprise business contact details, ticket titles, and network element IP addresses (credentials, PDFs, and consumer services were unaffected).
+* **Solution / Remediation:**
+  1. **Protect Exposed Entra Global Admins From Phishing:** Review Azure Service Health for tenant notifications, enforce **phishing-resistant FIDO2/WebAuthn MFA** on all Global Admin and hybrid-sync accounts, and monitor Entra audit/sign-in logs for targeted social engineering.
+  2. **Rotate All Kubernetes Secrets &amp; Tokens (Rackspace Spot):** Reissue Spot API and automation refresh tokens, download fresh `kubeconfig` files, purge any rogue pods/workloads, and rotate all credentials stored inside cluster Secrets.
+  3. **Apply Production-Grade Controls to Pre-Production Environments:** Enforce strict IAM scoping, MFA, and synthetic/anonymized test data in pre-production provisioning platforms (such as Maximo) so staging environments never expose live enterprise customer metadata.
+
+</details>
 
 <details markdown="1">
 <summary><strong>[2026-11-20 | 🇰🇷 KR] Kurly Data Breach Exposes 10,701 Records (Including RRNs &amp; Bank Accounts) &amp; Korean SaaS Spillovers</strong></summary>
