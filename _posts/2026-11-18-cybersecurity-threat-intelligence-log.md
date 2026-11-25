@@ -1,7 +1,7 @@
 ---
-title: "우리 회사 보안은 안전한가? - 최근 사이버 공격 팔로우업"
+title: "Is Our Company Secure? - Recent Cyber Attacks Follow-up"
 date: 2026-11-18
-last_modified_at: 2026-11-23
+last_modified_at: 2026-11-25
 categories: [Security]
 tags: [cybersecurity, threat-intelligence, vulnerability, incident-response, secops]     # TAG names should always be lowercase
 comments: true
