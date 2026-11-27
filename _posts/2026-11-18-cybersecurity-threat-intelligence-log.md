@@ -1,12 +1,89 @@
 ---
 title: "Is Our Company Secure? - Recent Cyber Attacks Follow-up"
 date: 2026-11-18
-last_modified_at: 2026-11-25
+last_modified_at: 2026-11-27
 categories: [Security]
 tags: [cybersecurity, threat-intelligence, vulnerability, incident-response, secops]     # TAG names should always be lowercase
 comments: true
 mermaid: true
 ---
+
+<details markdown="1">
+<summary><strong>[2026-11-26 | 🇰🇷 KR] CJ Olive Young &amp; Danawa Breach Disclosures, HotelStory Repeat Hack &amp; Naddic Games Ransomware Claim</strong></summary>
+
+* **Incident Overview:** Between November 25 and November 26, 2026, BoanNews and DailySecu reported multiple high-impact corporate breaches, service suspensions, and ransomware extortion claims across South Korea:
+  * **CJ Olive Young (`CJ올리브영`) Internal System Breach (Intrusion Nov 23 / Public Apology Nov 26):** External attackers gained unauthorized access to an internal business system, compromising detailed PII (names, IP addresses, member IDs, phone numbers, dates of birth, and email addresses) of **790 individuals** (employees, partners, and customers) alongside **~2.4 million internal management member-number records** (including ~2.34 million records containing internal member IDs only).
+  * **Danawa (`다나와` / ConnectWave) Suspected Intrusion &amp; Service Outage (Nov 26):** Operator **ConnectWave** suspended all Danawa price-comparison services starting at 02:00 KST on November 26 (for over 13 hours) after detecting signs of an external intrusion. The company notified KISA, engaged external forensic investigators to determine whether customer PII was exposed, and began sequentially restoring verified servers.
+  * **HotelStory (`호텔스토리`) Repeat Breach (Occurred Nov 22 / Confirmed Nov 23 / Reported Nov 26):** Just one month after an October breach, accommodation reservation-management SaaS vendor HotelStory suffered a second intrusion exploiting a system vulnerability, exposing both accommodation reservation records and partner lodging online booking-engine member data.
+  * **Naddic Games (`나딕게임즈`) Ransomware Extortion Claim (Reported Nov 26):** Ransomware group **The Gentlemen** listed South Korean game developer Naddic Games (*Closers*) on its dark-web leak site (detected the morning of November 26), though actual internal compromise and data exfiltration remain unconfirmed pending investigation.
+  * **PIPC Impersonation Phishing Warning (Reported Nov 25–26):** Authorities also warned of malicious phishing emails impersonating **Personal Information Protection Commission (PIPC)** staff, weaponizing public anxiety over domestic data breaches to deliver malware attachments and credential-harvesting links.
+* **Solution / Remediation:**
+  1. **Eliminate Bulk Member-ID Exports &amp; Lock Down Internal BI Portals:** Restrict internal analytics and business-support systems behind zero-trust VPNs and hardware FIDO2 MFA, prohibit bulk plaintext exports of customer/member identifiers, and enforce anomaly alerts on large internal queries.
+  2. **Perform Full Root-Cause Remediation Before Restoring Breached SaaS (HotelStory Lesson):** Do not resume production service on compromised web/booking engines until all vulnerable endpoints are patched, webshells are eradicated, and static secrets/API keys are rotated.
+  3. **Protect Employees &amp; Users Against Regulator-Impersonation Phishing:** Enforce DMARC/DKIM/SPF email authentication, block unauthorized macro/archive attachments, and alert customers that KISA and PIPC never request credential inputs or software downloads via unsolicited email.
+
+</details>
+
+<details markdown="1">
+<summary><strong>[2026-11-26 | 🌐 Global / 🇰🇷 KR] Linux Kernel "NFS2ROOT" Pre-Auth Root RCE (CVE-2026-99362) &amp; HPE iLO Firmware Advisories</strong></summary>
+
+* **Advisory Overview:** On November 25–26, 2026, **KISA (KrCERT/CC)**, BoanNews, and Linux vendors issued urgent warnings for critical kernel-level and server out-of-band management vulnerabilities:
+  * **Linux Kernel `NFS2ROOT` (`CVE-2026-99362`, CVSS 9.8 Critical — Disclosed Nov 25 / KISA Linux Advisory Nov 26):** A 12-year-old pre-authentication heap out-of-bounds write in the Linux kernel's built-in NFS server (`nfsd`, specifically `nfsd4_sequence()` handling NFSv4.1 and v4.2 sessions since kernel `3.16`). Unauthenticated remote attackers connecting over **TCP port 2049** can send crafted compound `SEQUENCE` requests causing a zero-length reply-cache slot mismatch, triggering kernel heap corruption and zero-click remote `root` code execution. Upstream fixes landed around Linux **`6.12.117`**, **`6.18.61`**, **`7.3.2`**, and **`7.4-rc1`**.
+  * **HPE iLO 5 / 6 / 7 Pre-Auth Buffer Overflows (`HPESBHF05170` / KISA Advisory Nov 25):** KISA warned administrators to patch multiple vulnerabilities in **HPE Integrated Lights-Out (iLO)** management firmware—led by **`CVE-2026-65204`** (a pre-authentication stack-based buffer overflow during SSH packet processing) alongside `CVE-2026-65205` through `CVE-2026-65209`.
+* **Solution / Remediation:**
+  1. **Patch Linux Kernels &amp; Execute Mandatory Reboot (`CVE-2026-99362`):** Apply vendor kernel security updates (Ubuntu/Debian/RHEL/etc.) and **reboot all hosts** so the patched `nfsd` module loads into RAM.
+  2. **Disable Unused `nfs-server` Daemons or Restrict TCP `2049`:** Verify exposure by checking `systemctl is-active nfs-server` and `/proc/fs/nfsd/versions` (`+4.1` / `+4.2`). If NFS is unused, run `sudo systemctl disable --now nfs-server`; otherwise, firewall TCP `2049` strictly to trusted internal subnets.
+  3. **Upgrade HPE iLO Firmware &amp; Isolate OOB Management:** Upgrade to **iLO 5 `3.22+`**, **iLO 6 `1.79+`**, or **iLO 7 `1.25.01+`**, and ensure iLO/BMC management ports are never exposed to the public internet or general corporate user VLANs.
+
+</details>
+
+<details markdown="1">
+<summary><strong>[2026-11-25 | 🇺🇸 US] Suspected AI-Driven Breach of US Intelligence OSINT Network, FinCEN Cyber Incident &amp; NTLM Patch Fallout</strong></summary>
+
+* **Incident Overview:** On November 25–26, 2026, BleepingComputer and major US media outlets reported two federal cyber incidents alongside widespread enterprise authentication disruptions from Microsoft's November patch wave:
+  * **CIA / ODNI / NGA Unclassified OSINT Network Breach (Reported Nov 25–26):** US officials confirmed an intrusion into an unclassified network used for open-source intelligence (OSINT) analysis across the **CIA**, **Office of the Director of National Intelligence (ODNI)**, and **National Geospatial-Intelligence Agency (NGA)**. Preliminary assessments noted the suspected use of the open-source AI-powered penetration-testing framework **`ARTEX`**, with investigators examining potential China-backed threat actor links; classified networks and core capabilities remained unaffected.
+  * **US Treasury FinCEN Cyber Incident (Reported Nov 25–26):** The **Financial Crimes Enforcement Network (FinCEN)** disclosed unauthorized access to a limited subset of systems, preemptively taking platforms such as batch-filing **Secure Data Transfer Mode (SDTM)** offline while keeping the main BSA E-Filing portal operational. FinCEN extended Bank Secrecy Act (BSA) filing deadlines (originally due Nov 18–Dec 29) to **December 30, 2026**, while forensic triage with the FBI and CISA found no immediate evidence of compromise to core BSA or Beneficial Ownership databases.
+  * **Microsoft November NTLM Signing Breakdown (`CVE-2026-118737`, Reported Nov 25–26):** Microsoft confirmed that Phase 1 of its NTLM cryptographic message-signing overhaul (deployed in November updates to mitigate `CVE-2026-118737` Windows RPC Runtime RCE) broke authentication (`STATUS_LOGON_FAILURE`) for third-party auth proxies and SSO solutions that omit `TargetInfo` fields in `NTLMSSP_CHALLENGE` responses.
+* **Solution / Remediation:**
+  1. **Air-Gap &amp; Harden Unclassified OSINT/Research Sandboxes:** Treat unclassified intelligence and external scraping environments as high-exposure zones—enforce strict zero-trust segmentation from internal agency networks and deploy AI-speed WAF/scanner throttling against autonomous `ARTEX`-style tooling.
+  2. **Verify FinCEN Batch-Filing Continuity:** Financial compliance teams impacted by the `SDTM` outage should transition time-sensitive filings to the active BSA E-Filing web portal or document eligibility under the **December 30, 2026** relief extension.
+  3. **Remediate NTLM Proxy Failures Safely:** Audit third-party SSO/auth proxies for NTLMv2 compliance and migrate workloads to Kerberos before Microsoft's Phase 2 enforcement in May 2027. Where urgent compatibility relief is required, apply Microsoft's temporary registry workaround (`ClientAllowUnsignedNtlm = 1` `REG_DWORD` under `HKLM\SYSTEM\CurrentControlSet\Control\Lsa\MSV1_0`).
+
+</details>
+
+<details markdown="1">
+<summary><strong>[2026-11-25 | 🇺🇸 US / 🇪🇺 EU] CISA KEV 10-Flaw Wave (Mitel, Juniper SSR, Xen Orchestra), Danfoss European OT/ICS Advisories &amp; Drupal Exploitation</strong></summary>
+
+* **Advisory Overview:** On November 25, 2026, **US CISA** added **10 actively exploited vulnerabilities** to the Known Exploited Vulnerabilities (KEV) catalog—spanning enterprise infrastructure and European cold-chain OT/ICS controllers—while **Drupal** and **KISA** issued an urgent follow-up advisory for active CMS exploitation:
+  * **Mitel MiCollab (5 KEV CVEs, led by `CVE-2026-133323` CVSS 10.0 &amp; `CVE-2026-133303` CVSS 9.0):** Unauthenticated OS command injection and XML injection in the Audio, Web, and Video Conferencing (AWV) component actively exploited to deploy web shells and gain root access (alongside `CVE-2026-133311`, `CVE-2026-133275`, and `CVE-2026-133324`).
+  * **HPE / Juniper Session Smart Router &amp; Conductor (`CVE-2026-103406`, CVSS 9.8):** Unauthenticated OS command injection executing commands as `root` via a crafted Salt minion ID.
+  * **Vates Xen Orchestra (`CVE-2026-133469`, CVSS 9.8):** Authentication bypass via a crafted JSON object inside authentication cookies.
+  * **European Cold-Chain OT/ICS — Danfoss AK-SM 800A / 8xxA Controllers:** CISA added three actively exploited **Danfoss AK-SM 800A** flaws to KEV—**`CVE-2023-25914`** (Path Traversal, CVSS 8.8), **`CVE-2023-25915`** (RCE, CVSS 9.9), and **`CVE-2025-41450`** (Improper Auth, CVSS 8.5)—directly tied to the destructive European supermarket refrigeration sabotage campaigns, while CISA and Germany's BSI also warned of an **unpatched** stack-based buffer overflow (**`CVE-2026-129713`**, CVSS 9.3–9.8) affecting AK-SM 8xxA firmware `&lt;= 5.4.0`.
+  * **Drupal Core Follow-Up (`SA-CORE-2026-019` / `CVE-2026-136716`, Nov 25):** Following active in-the-wild exploitation of residual installer flaws (`CVE-2026-132165`), Drupal and KISA urged re-patching sites even if the November 18 update was already applied.
+* **Solution / Remediation:**
+  1. **Apply Vendor Patches Immediately:**
+     * **Mitel MiCollab:** Apply patch **`KB000129195`** on build **`10.3.0.18`** (or upgrade to a newer fixed release) and perform mandatory forensic triage for web shells.
+     * **Juniper SSR / Conductor:** Upgrade to **`7.0.5`**, **`7.1.7`**, or **`7.2.3+`**.
+     * **Vates Xen Orchestra:** Upgrade to **`6.9.2`** (stable) or **`6.10.1+`** (latest), incorporating `xo-server` `5.211.2` / `5.213.1+`.
+     * **Drupal Core:** Upgrade to **`11.4.14+`**, **`11.3.23+`**, or **`10.6.23+`**, run `update.php`, block public access to `install.php`, and audit `user 1` credentials.
+  2. **Isolate &amp; Harden Danfoss OT/ICS Controllers (Patch `5.5.x` Pending for `CVE-2026-129713`):** Immediately remove all Danfoss AK-SM 8xxA/800A controllers from the public internet, funnel remote vendor access strictly through authenticated VPNs, enable **Strict Mode**, rotate default passwords, and plan hardware replacement for EoL units (e.g., AK-SC355).
+
+</details>
+
+<details markdown="1">
+<summary><strong>[2026-11-25 | 🇺🇸 US / 🇰🇷 KR / 🌐 Global] 1Password &amp; Todoist CI/CD Breaches, Korea Investment Savings Bank 2nd Leak, Pamtek &amp; VMware VMSA-2026-0011</strong></summary>
+
+* **Incident &amp; Advisory Overview:** Between November 24 and November 25, 2026, software supply-chain/CI-CD compromises, South Korean financial/industrial disclosures, and a second critical VMware vCenter advisory surfaced:
+  * **1Password Backend / CI-CD Breach (Disclosed Nov 25 / Investigated Nov 19):** An attacker hijacked an employee's corporate GitHub account to access private repositories and push malicious code into backend CI/CD pipelines, downloading administrative customer metadata (names, emails, account IDs, sign-in timestamps, public keys, SRP parameters, and unused invite/recovery tokens). **Customer vaults, Master Passwords, and Secret Keys remained encrypted and uncompromised.**
+  * **Todoist Production Cloud Breach (Intrusion Nov 22–23 / Disclosed Nov 24–25):** Attackers used a stolen version-control credential to alter build workflows and escalate privileges into production cloud infrastructure, impacting **~6% of users** (emails, account creation dates, and legacy salted SHA-1 password hashes), plus ~0.003% API/Slack tokens and ~0.001% task/Outlook add-on data. Todoist forced password resets, retired SHA-1 hashes, and disabled the Outlook add-on.
+  * **Korea Investment Savings Bank (`한국투자저축은행`) &amp; Pamtek (`팸텍`) (Reported Nov 25):** Korea Investment Savings Bank confirmed **178 additional customers** were leaked on the morning of November 25—two days after an initial Nov 22–23 mobile-portal breach of **86,433** customers (**86,611** total)—while KOSDAQ-listed semiconductor automation firm **Pamtek** reported a **November 23 ransomware attack** risking shareholder and former employee PII (RRNs, addresses, shareholdings) to KISA/PIPC.
+  * **Broadcom VMware `VMSA-2026-0011` (`CVE-2026-123903`, CVSS 9.8 — Nov 24 / KISA Nov 25):** Broadcom and KISA warned of a second critical vCenter `vmdir` authentication bypass (`CVE-2026-123903` with **no workaround**) alongside ESX I/O filter RCEs (`CVE-2026-123910`, `CVE-2026-123911`).
+* **Solution / Remediation:**
+  1. **Harden Developer Identities &amp; CI/CD Pipelines:** Enforce phishing-resistant FIDO2 MFA and hardware-signed commits across GitHub/VCS accounts, isolate CI/CD build runners from production customer databases, and retire all legacy weak password hashing (such as salted SHA-1).
+  2. **Patch VMware `VMSA-2026-0011` Immediately:** Upgrade vCenter to **`9.1.2`**, **`9.0.2.0300`**, or **`8.0 U3m`** (VCF **`5.2.5`**) and ESX to **`ESXi-9.1.2.0-25946735`**, **`ESXi-9.0.2.0200-25953133`**, or **`ESXi80U3m-25926933`**. Where ESX patching is delayed, apply Broadcom's firewall restriction on port `9080` (`iofiltervp`) to allow only the vCenter IP (`KB463535`).
+  3. **Verify Full Containment on Financial Mobile Portals:** After any initial web/mobile breach, immediately rotate session/API secrets and audit every related microservice endpoint to prevent follow-on leaks (such as the Nov 25 secondary breach at Korea Investment Savings Bank).
+
+</details>
 
 <details markdown="1">
 <summary><strong>[2026-11-22 | 🇰🇷 KR] KEPCO Massive Data Breach Exposes 1.52 Million Records (RRNs, Bank Accounts &amp; Card Numbers) Across <code>한전ON</code> &amp; Procurement Portal</strong></summary>
